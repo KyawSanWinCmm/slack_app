@@ -1,0 +1,2 @@
+module TDirectStarThreadHelper
+end

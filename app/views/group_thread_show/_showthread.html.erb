@@ -1,0 +1,45 @@
+
+<div id="main">
+
+
+<div class="txtmsg">
+<h1><%= @s_channel.channel_name%> </h1>
+    <hr>
+
+    <div>
+        <ul class="users">
+                <li><%= @send_user.name%> <%= @t_group_message.created_at.strftime("at %I:%M%p") %>  
+                
+                <br>
+                    <%= @t_group_message.groupmsg%>
+        </ul>
+    </div>
+    <hr>
+    <h4>Reply</h4>
+    <hr>
+    <div class="messagepannel">
+        <ul class="users">
+            <% @t_group_threads.each do |t_group_thread| %>
+                <li><%= t_group_thread.name%> <%= t_group_thread.created_at.strftime("at %I:%M%p") %> 
+                    <% if @t_group_star_thread_msgids.include? t_group_thread.id %>
+                        | <%= link_to "", groupunstarthread_path(:id => t_group_thread.id), class:'fas fa-star' %></li>
+                    <% else %>
+                        | <%= link_to "",  groupstarthread_path(:id => t_group_thread.id), class:'far fa-star'%></li>
+                    <% end %> 
+                </li>
+                    
+                    <%= t_group_thread.groupthreadmsg%>
+            <% end %>
+        </ul>
+    </div>
+    <div class="textbox">
+    <%= form_for(:session, url: groupthreadmsg_path) do |f| %>
+    <%= f.text_field :message, class: 'form-control' %>
+    <%= f.submit "Send", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+</div>
+
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>

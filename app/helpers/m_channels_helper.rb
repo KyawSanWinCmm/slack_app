@@ -1,0 +1,2 @@
+module MChannelsHelper
+end

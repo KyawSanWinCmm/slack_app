@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  groupthreadmsg: MyString
+  t_group_message: one
+  m_user: one
+
+two:
+  groupthreadmsg: MyString
+  t_group_message: two
+  m_user: two

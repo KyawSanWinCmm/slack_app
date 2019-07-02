@@ -1,0 +1,2 @@
+module TDirectMessagesHelper
+end

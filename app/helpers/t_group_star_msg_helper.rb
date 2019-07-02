@@ -1,0 +1,2 @@
+module TGroupStarMsgHelper
+end

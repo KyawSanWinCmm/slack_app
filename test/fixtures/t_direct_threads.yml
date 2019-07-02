@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  directthreadmsg: MyString
+  read_status: false
+  t_direct_message: one
+  m_user: one
+
+two:
+  directthreadmsg: MyString
+  read_status: false
+  t_direct_message: two
+  m_user: two

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  directmsg: MyString
+  read_status: false
+  send_user_id: 1
+  receive_user_id: 1
+
+two:
+  directmsg: MyString
+  read_status: false
+  send_user_id: 1
+  receive_user_id: 1

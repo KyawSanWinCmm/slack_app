@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  channel_name: MyString
+  channel_status: false
+  m_workspace: one
+
+two:
+  channel_name: MyString
+  channel_status: false
+  m_workspace: two

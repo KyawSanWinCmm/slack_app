@@ -1,0 +1,2 @@
+module TGroupStarThreadHelper
+end

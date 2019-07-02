@@ -1,0 +1,18 @@
+
+<header class="navbar navbar-fixed-top navbar-light navbar-default">
+  <div class="container">
+    <!-- <%= image_tag("welcome.png", size: "30x30", alt: "Edit Entry") %> -->
+    <%= link_to "Slack App", '#', id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+      <% if session[:workspace_id].nil?%>
+        <li><%= link_to "Home",   'welcome' %></li>
+        <li><%= link_to "Create Workspace",   'workspace' %></li>
+        <li><%= link_to "Sign in", 'signin' %></li>
+      <% else %>
+        <li><%= link_to "Log out", logout_path, method: :delete%></li>
+      <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>

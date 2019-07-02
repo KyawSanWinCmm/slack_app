@@ -1,0 +1,76 @@
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<nav class="navbar justify-content-between dropright">
+	<div class="btn-group dropright list-group nav">
+		<a href="#" class="wsp dropdown-toggle  list-group-item list-group-item-action" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+		<%= @m_workspace.workspace_name %>
+		</a>
+		<span class="cc list-group-item list-group-item-action "><%= @m_user.name %><span class="dot"></span></span>
+		<div class="dp dropdown-menu box">
+			<!-- Dropdown menu links -->
+			<ul class=" sbox list-unstyled text-center list-group">
+				<li>
+					<a class="list-group-item list-group-item-action" href="#">メンバーを招待する</a>
+				</li>
+				<li>
+					<a class="list-group-item list-group-item-action" href="#">プロフィール&アカウント</a>
+				</li>
+				<li>
+					<a class="list-group-item list-group-item-action" href="#">メンバ管理</a>
+				</li>
+				<li>
+					<a class="list-group-item list-group-item-action" tabindex="-1" href="#">サインアウト</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+			
+</nav>
+	
+<div class="wrapper">
+	<div class="row">
+		<div class="col-sm-3">
+			<nav id="sidebar">
+				<ul class="list-unstyled components" >
+					<li class="form-inline my-0 my-lg-0">
+						<a href="#"><i class="fa fa-align-justify"></i>全未読</a>
+					</li>
+					<li class="form-inline my-0 my-lg-0">
+						<a href="#"><i class="fa fa-comments"></i>スレッド</a>
+					</li>
+					<li>
+						<a href="#" class=" form-inline my-0 my-lg-0 channel">チャンネル<i class="fa fa-plus-circle" id="channel1"></i></a>
+						<div class="msg">
+						<% @m_channels.each do |m_channel| %>
+							<%= link_to m_channel.channel_name, m_channel %>
+						<% end %>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="channel">ダイレクトメッセージ</a>
+						<ul class="users">
+							<li>
+								<%=  @m_user.name %> (自分)
+							</li>
+							<% @m_users.each do |m_user| %>
+								<% if@m_user.id !=  m_user.id %>
+									<li>
+									<%= link_to m_user.name, m_user %> 
+									<% if m_user.active_status == true%>
+										<span class="dot"></span>
+									<% else %>
+										<span class="undot"></span>
+									<% end %>
+									| <%=  m_user.email %>
+									</li>
+								<% end %>
+							<% end %>
+						</ul>
+					</li>                       
+				</ul>
+			 </nav>
+		</div>
+	</div>
+</div>   
+
+<div>

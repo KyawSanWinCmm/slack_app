@@ -1,0 +1,32 @@
+<% provide(:title, 'Create Workspace') %>
+
+<h1>Create Workspace</h1>
+
+<div class="container para">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@m_user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+        <%= f.label :workspace_name, "Workspace Name" %>
+        <%= f.text_field :remember_digest, class: 'form-control' %>
+
+        <%= f.label :channel_name, "Channel Name" %>
+        <%= f.text_field :profile_image, class: 'form-control' %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email, class: 'form-control' %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+        <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

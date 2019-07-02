@@ -1,0 +1,45 @@
+
+<div id="main">
+
+
+<div class="txtmsg">
+<h1><%= @s_user.name%> </h1>
+    <hr>
+<div>
+    <ul class="users">
+            <li><%= @send_user.name%> <%= @t_direct_message.created_at.strftime("at %I:%M%p") %>  
+            
+            <br>
+                <%= @t_direct_message.directmsg%>
+    </ul>
+</div>
+<hr>
+<h4>Reply</h4>
+<hr>
+<div class="messagepannel">
+    <ul class="users">
+        <% @t_direct_threads.each do |t_direct_thread| %>
+            <p>
+            <li><%= t_direct_thread.name%> <%= t_direct_thread.created_at.strftime("at %I:%M%p") %> 
+                <% if @t_direct_star_thread_msgids.include? t_direct_thread.id %>
+                    | <%= link_to "", unstarthread_path(:id => t_direct_thread.id), class:'fas fa-star' %></li>
+                <% else %>
+                    | <%= link_to "",  starthread_path(:id => t_direct_thread.id), class:'far fa-star' %></li>
+                <% end %> 
+                
+                <%= t_direct_thread.directthreadmsg%>
+                </p>
+        <% end %>
+    </ul>
+</div>
+<div class="textbox">
+    <%= form_for(:session, url: directthreadmsg_path) do |f| %>
+    <%= f.text_field :message, class: 'form-control' %>
+    <%= f.submit "Send", class: "btn btn-primary" %>
+    <% end %>
+</div>
+</div>
+</div>
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>
