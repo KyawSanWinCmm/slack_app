@@ -30,4 +30,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      m_user:
+        remember_digest: "Workspace Name"
+        profile_image: "Channel Name"
+    errors:
+      models:
+        m_user:
+          attributes:
+            remember_digest:
+              blank: "can't be blank"
+            profile_image:
+              blank: "can't be blank"

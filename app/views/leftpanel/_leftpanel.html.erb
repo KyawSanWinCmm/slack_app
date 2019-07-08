@@ -5,7 +5,7 @@
 		<a href="#" class="wsp dropdown-toggle  list-group-item list-group-item-action" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
 		<%= @m_workspace.workspace_name %>
 		</a>
-		<span class="cc list-group-item list-group-item-action "><%= @m_user.name %><span class="dot"></span></span>
+		<span class="cc list-group-item list-group-item-action "><%= @m_user.name %></span></span>
 		<div class="dp dropdown-menu box">
 			<!-- Dropdown menu links -->
 			<ul class=" sbox list-unstyled text-center list-group">
@@ -24,8 +24,6 @@
 			</ul>
 		</div>
 	</div>
-			
-</nav>
 	
 <div class="wrapper">
 	<div class="row">
@@ -38,34 +36,61 @@
 					<li class="form-inline my-0 my-lg-0">
 						<a href="#"><i class="fa fa-comments"></i>スレッド</a>
 					</li>
+					<li class="form-inline my-0 my-lg-0">
+						<%= link_to "メンバーを招待する" , memberinvite_url, class: 'fa fa-plus-circle' %>
+					</li>
 					<li>
-						<a href="#" class=" form-inline my-0 my-lg-0 channel">チャンネル<i class="fa fa-plus-circle" id="channel1"></i></a>
-						<div class="msg">
+						<%= link_to "チャンネル" , channelcreate_url, class: 'fa fa-plus-circle' %>
+						<div id="channellists">
 						<% @m_channels.each do |m_channel| %>
-							<%= link_to m_channel.channel_name, m_channel %>
+							<ul class="countnumber">
+							<% if m_channel.channel_status == true%>
+								<li class="countnumberone">
+									<%= link_to m_channel.channel_name, m_channel, class: 'fas fa-hashtag' %>
+								</li>
+								<% if m_channel.message_count > 0 %> 
+									<li class="countnumbertwo">
+										<%=  m_channel.message_count %>
+									</li>
+								<% end %> 
+							<%  else %>
+							
+								<li class="countnumberone">
+									<%= link_to m_channel.channel_name, m_channel , class: 'fa fa-lock'%>
+								</li>
+								<% if m_channel.message_count > 0 %> 
+									<li class="countnumbertwo">
+										<%=  m_channel.message_count %>
+									</li>
+								<% end %> 
+							<%end%>
+							</ul>
 						<% end %>
 						</div>
 					</li>
 					<li>
 						<a href="#" class="channel">ダイレクトメッセージ</a>
-						<ul class="users">
-							<li>
+						
+							<li id="username">
 								<%=  @m_user.name %> (自分)
 							</li>
+							
+							<div id="userlists">
 							<% @m_users.each do |m_user| %>
 								<% if@m_user.id !=  m_user.id %>
-									<li>
+								<ul class="countnumber">
+									<li class="countnumberone">
 									<%= link_to m_user.name, m_user %> 
-									<% if m_user.active_status == true%>
-										<span class="dot"></span>
-									<% else %>
-										<span class="undot"></span>
-									<% end %>
-									| <%=  m_user.email %>
 									</li>
+									<% if m_user.email != '0' %> 
+										<li class="countnumbertwo">
+										<%=  m_user.email %>
+										</li>
+									<% end %> 	
+								</ul>
 								<% end %>
 							<% end %>
-						</ul>
+							</div>
 					</li>                       
 				</ul>
 			 </nav>

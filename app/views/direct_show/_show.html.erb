@@ -1,29 +1,6 @@
 
 <div id="main">
-
-
-<div class="txtmsg">
-    <h1><%= @s_user.name%> </h1>
-    <hr>
-        <div class="messagepannel">
-            <ul class="users">
-                <% @t_direct_messages.each do |t_direct_message| %>
-                    <p>
-                    <li><%= t_direct_message.name%> 
-                        <%= t_direct_message.created_at.strftime("posted at %I:%M%p") %>  
-                        |  <%= link_to t_direct_message.count,  t_direct_message, class: 'fab fa-facebook-messenger'%>
-                            <% if @t_direct_star_msgids.include? t_direct_message.id %>
-                                | <%= link_to "",  unstar_path(:id => t_direct_message.id), class:'fas fa-star'%>
-                            <% else %>
-                            | <%= link_to "",  star_path(:id => t_direct_message.id), class:'far fa-star'%>
-                            <% end %>
-                            </li>
-                        <%= t_direct_message.directmsg%>
-                    </p>
-                <% end %>
-            </ul>
-        </div>
-
+    <%= render 'direct_show/directmsglists' %>
     <div class="textbox">
         <%= form_for(:session, url: directmsg_path) do |f| %>
         <%= f.text_field :message, class: 'form-control', id: 'tags' %>
@@ -37,41 +14,4 @@
 </div>
 
 
-<script>
-
-if(0 < 1)
-  $( function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#tags" ).autocomplete({
-      source: availableTags ,
-      position: {
-        my: "left bottom",
-        at: "left top",
-    }
-    });
-  } );
-  </script>
 

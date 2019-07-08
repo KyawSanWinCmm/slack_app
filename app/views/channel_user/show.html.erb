@@ -1,0 +1,43 @@
+<div id="main">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
+        <div class = "txtmsg">	
+            <% @count = 0 %>			
+            <h2 class="style1"><%= @s_channel.channel_name%></h2>
+            <div class="container">
+                <div class="col-md-6 col-md-offset-3">                
+                 <%= form_tag(channeluseradd_path, method: "get") do %>
+                    <%= label_tag(:q, "User List:") %>
+                    <select name="userid">
+                      <%  @w_users.each do |wuser| %>
+                        <% unless @c_users_id.include?(wuser.id) %>
+                          <option value="<%= wuser.id %>"><%= wuser.name%></option>
+                        <% end %>
+                      <% end %>
+                    </select>
+                    <%= submit_tag("Add") %>
+                  <% end %>
+                </div>
+            </div>
+           
+            <div id="directlist">
+                <% @c_users.each do |c_user| %>
+
+                <p class="style21"><%= @count += 1 %></p>
+
+                <p class="style22"><%= c_user.name%></p> 
+
+                <p class="style23"><%= c_user.email %></p>
+
+                <% if c_user.created_admin == 0%>
+                    <p class="style24" ><%= link_to "Remove", channeluserdestroy_path(id: c_user.id)%></p>
+                <% end %>
+
+                <hr>
+                <% end %>
+            <div>
+    </div>
+</div>
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>

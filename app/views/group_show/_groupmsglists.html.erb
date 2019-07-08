@@ -1,0 +1,29 @@
+ <div class="txtmsg">	
+<% @count = 0 %>
+    <div id="grouplist">			
+        <h2 class="style1"><%= @s_channel.channel_name%> <sapn style="margin-left: 20px"> <i class="material-icons">&#xe7fc;</i> <%= link_to @u_count, channeluser_path%></span></h2>
+
+        <% @t_group_messages.each do |t_group_message| %>
+
+        <p class="style21"><%= @count += 1 %></p>
+
+        <p class="style22"><%= t_group_message.name%></p>
+
+        <p class="style23"><%= t_group_message.created_at.strftime("%F")%>/<%= t_group_message.created_at.strftime("%I:%M%p")%></p>
+
+        <p class="style24"><%= link_to t_group_message.count,  t_group_message, class: 'fab fa-facebook-messenger'%></p>
+
+        <% if @t_group_star_msgids.include? t_group_message.id %>
+        <%= link_to "",  groupunstar_path(:id => t_group_message.id), class:'fas fa-star' %>
+        <% else %>
+        <%= link_to "",  groupstar_path(:id => t_group_message.id), class:'far fa-star'%>
+        <% end %>
+
+        <p class="style3"> -->  <%= t_group_message.groupmsg%></p>
+        <hr>
+        <% end %>
+   </div>
+</div>
+
+
+

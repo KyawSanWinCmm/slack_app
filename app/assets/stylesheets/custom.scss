@@ -50,6 +50,9 @@ body {
     border-color: #E7E7E7;
 }
 
+ul.nav a{color: white !important; }
+ul.nav a:hover { color: red !important; }
+
 header{
 
     a {
@@ -89,6 +92,11 @@ figcaption{
     text-align:center;
 	font-size: 1.0em;
  }
+ 
+h1{
+  text-align : center;
+  padding : 10px;
+}
 	 
 h2{
 	text-shadow:2px 2px #b3d1ff;
@@ -147,9 +155,10 @@ input {
 }
 
 .textbox{
+  margin-left:260px;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 80%;
   color: white;
   text-align: center;
   margin-bottom: 2px;
@@ -258,7 +267,7 @@ a, a:hover{
   background-color: white;
 }
 .navbar .nav .cc {
-  color: white;
+  color: white; 
   background:#1c2331;
 }
 .sbox{
@@ -276,18 +285,55 @@ a, a:hover{
   border-radius: 15px;
 }
 .channel{
-  margin-left: 20px;
+  margin-left: 0px;
 }
 .channel #channel1{
-  margin-left: 50px;
+  margin-left: 0px;
 }
+#channellists{
+  margin-left:15px;
+}
+#userlists{
+  margin-left:15px;
+}
+#username{
+  margin-left:25px;
+}
+  ul.countnumber {
+    list-style-type: none;
+    margin-top: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  ul.countnumber li {
+    float: left;
+    display: block; 
+  }
+
+  ul.countnumber li.countnumbertwo{
+    margin-top:8px;
+    margin-left: 5px;
+  }
+
 .dot {
   height: 10px;
   width: 10px;
   background-color:greenyellow;
   border-radius: 50%;
-  display: inline-block;
-  margin-left: 5px;
+  float:left;
+  margin-top:13px;
+  margin-left: 1px;
+}
+
+.dot1{
+  height: 10px;
+  width: 10px;
+  background-color:greenyellow;
+  border-radius: 50%;
+  float:left;
+  margin-top: 5px;
+  margin-left: 1px;
 }
 
 .undot {
@@ -295,8 +341,8 @@ a, a:hover{
   width: 10px;
   background-color:gray;
   border-radius: 50%;
-  display: inline-block;
-  margin-left: 5px;
+  float:left;
+  margin-left: 2px;
 }
 
 
@@ -333,3 +379,90 @@ a, a:hover{
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+/*unread thread usermanage star*/
+.unreadthread{
+  margin-left:300px;
+}
+.unreadthread1{
+  margin-left:330px;
+}
+.style1 {
+  margin-left:250px;
+  
+}
+.style21 {
+  font-size:1.2em;
+  display: inline-block;
+  margin-left:250px;
+  padding: 10px;
+  
+}
+.style22 {
+  font-size:1.2em;
+  display: inline-block;
+  margin-left:5px;
+  padding: 10px;
+  
+}
+.style23 {
+  font-size:1.2em;
+  display: inline-block;
+  margin-left:100px;
+  padding: 10px;
+  
+}
+.style24 {
+  display: inline-block;
+  margin-left:150px;
+  padding: 10px;
+  
+}
+.style25 {
+  display: inline-block;
+  margin-left:180px;
+  padding: 10px;
+  
+}
+.style3{
+  margin-left:320px;
+}
+.style4{
+  font-size:1.3em;
+  padding:15px;
+  margin-left:450px;
+}
+.style5{
+  margin-left:500px;
+}
+.in input{
+  margin-left:90%;
+  width:30%;
+  display: inline-block;
+}
+.in .txt2{
+  background-color:#4CAF50;
+  color:white;
+}
+.in .txt2:hover{
+  background-color:#45a049;
+}
+.txt3{
+  margin-left:60%;
+  display: inline-block;
+}
+.txt4{
+  margin-left:70%;
+  display: inline-block;
+}
+.tab{
+  width:100%;
+  margin-left: 330px;
+  border-spacing: 20px;
+  border-collapse: separate;
+}
+.tab a{
+  color:black;
+  text-decoration:underline;
+}
+

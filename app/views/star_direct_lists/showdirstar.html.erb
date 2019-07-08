@@ -1,0 +1,29 @@
+<% provide(:title, 'Direct Star Lists') %>
+
+<div>
+<%=  @dirstar.each do |ds| %>
+    <ul class="unreadthread">
+    <h2>Direct Star</h2>
+    <li><%= ds.id %>     <%= ds.name %>        <%= ds.created_at %></li>
+        <%= ds.directmsg %>
+    <hr>
+    </ul>
+<% end %>
+</div>
+
+<div>   
+<%=  @dirthreadstar.each do |dts| %>
+    <ul class="unreadthread">
+    <h2>Direct Thread Star</h2>
+    <li><%= dts.id %>     <%= dts.name %>        <%= dts.created_at %></li>
+        <%= dts.directthreadmsg %>
+    <hr>
+    </ul>
+<% end %>
+</div>
+
+
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>
+  

@@ -1,0 +1,46 @@
+<% provide(:title, 'All Unread Lists') %>
+
+            <div>
+                <% @count = 0 %>
+                <%=  @dirunmsg.each do |d| %>
+                    <ul class="unreadthread">
+                    <h2><%= d.name %></h2>
+                    <li><%= @count += 1 %>     <%= d.name %>        <%= d.created_at %></li>
+                        <%= d.directmsg %>
+                    </ul>
+                        <% @countone = 0 %>
+                        <%=  @dirunthread.each do |dt| %>
+                            <% if d.id == dt.t_direct_message_id %>
+                                <ul class="unreadthread">
+                                <li><%= @countone += 1 %>     <%= dt.name %>        <%= dt.created_at %></li>
+                                    <%= dt.directthreadmsg %>
+                                </ul>
+                            <% end %>
+                        <% end %>
+                <% end %>
+            </div>
+
+            <div>
+                <% @counttwo = 0 %>
+                <%=  @gpunmsg.each do |g| %>
+                    <ul class="unreadthread">
+                    <h2><%= g.channel_name %></h2>
+                    <li><%= @counttwo += 1 %>     <%= g.name %>        <%= g.created_at %></li>
+                        <%= g.groupmsg %>
+                    <hr>
+                    </ul>
+                    #<% @countthree = 0 %>
+                    #<%=  @gpunthread.each do |gt| %>
+                    #    <% if g.id == gt.t_group_message_id %>
+                    #        <ul class="unreadthread">
+                    #        <li><%= @countthree += 1 %>     <%= gt.name %>        <%= gt.created_at %></li>
+                    #            <%= gt.groupthreadmsg %>
+                    #        </ul>
+                    #    <% end %>
+                    #<% end %>
+                <% end %>
+            </div>
+
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>

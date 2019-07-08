@@ -1,0 +1,68 @@
+<% provide(:title, 'Thread') %>
+<div id="main">
+    <div>
+    <% @t_direct_messages.each do |t_direct_message| %>
+
+        <h2 class="style1"><%= t_direct_message.name %> </h2>
+        <hr>
+    
+        <% @count = 0 %>
+        <% @t_direct_threads.each do |t_direct_thread| %>
+            <% if t_direct_message.id == t_direct_thread.id %>
+
+            <p class="style21"><%= @count += 1 %></p>
+
+            <p class="style22"><%= t_direct_thread.name%></p>
+
+            <p class="style23"><%= t_direct_thread.created_at.strftime(" %I:%M%p") %></p>
+
+            <p class="style24"></p>
+            
+            <% if @t_direct_star_thread_msgids.include? t_direct_thread.id %>
+                    | <%= link_to "", unstarthread_path(:id => t_direct_thread.id), class:'fas fa-star' %></li>
+            <% else %>
+                    | <%= link_to "",  starthread_path(:id => t_direct_thread.id), class:'far fa-star' %></li>
+            <% end %> 
+
+            <p class="style3"> -->  <%= t_direct_thread.directthreadmsg%> </p>
+            <% end %>
+        <% end %>   
+    <% end %>
+    </div>
+
+    <div>
+    <% @t_group_messages.each do |t_group_message| %>
+
+        <h2 class="style1"><%= @s_channel.channel_name%></h2>
+        <hr>
+
+        <% @count = 0 %>
+        <% @t_group_threads.each do |t_group_thread| %>
+            <% if t_group_message.id == t_group_thread.id %>
+
+            <p class="style21"><%= @count += 1 %></p>
+
+            <p class="style22"><%= t_group_thread.name%></p>
+
+            <p class="style23"><%= t_group_thread.created_at.strftime("%I:%M%p") %></p>
+
+            <p class="style24"></p>
+            
+            <% if @t_group_star_thread_msgids.include? t_group_thread.id %>
+                <%= link_to "", groupunstarthread_path(:id => t_group_thread.id), class:'fas fa-star' %></li>
+            <% else %>
+                <%= link_to "",  groupstarthread_path(:id => t_group_thread.id), class:'far fa-star'%></li>
+            <% end %> 
+
+            <p class="style3"> -->  <%= t_group_thread.groupthreadmsg%></p>
+            <% end %>
+        <% end %>     
+        <% end %>
+    </div>
+</div>
+            
+
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>
+  

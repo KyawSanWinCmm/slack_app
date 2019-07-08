@@ -1,0 +1,40 @@
+
+<div id="main">
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
+<h2 class="style1" style="text-align:center">メンバーを招待する</h2>
+  <br><br>
+  <div class="container para">
+    <div class="col-md-6 col-md-offset-4">
+      <%=form_for(:session, url: memberinvite_url) do |f| %>
+        <%= f.label :チャンネル名, "Workspace Name :"%>
+        <%= f.label:workspace_name, @m_workspace.workspace_name%> 
+        <br><br>
+        <%= f.select(:channelid, @m_channels.all.collect {|p| [ p.channel_name, p.id ] }, { :prompt => "Please select channels"}, 
+        { :multiple => true, :size => 5 }) %>
+        <%= f.label :email%>
+        <%= f.text_field :email, class:'form-control'%> 
+        <%= f.submit "Invite Member", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+  </div>
+                                
+                                
+                           
+</div>
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>

@@ -13,10 +13,27 @@
   <%= render 'layouts/header' %>
     <div >
     <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <div style="text-align:center" class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>
     <%= yield %>
     </div>
     <!-- <%= render 'layouts/footer' %> -->
+
+    <% unless session[:workspace_id].nil?%>
+      <script>
+      $(document).ready(function () {
+          // will call refreshPartial every 3 seconds
+          setInterval(refreshPartial, 5000)
+
+      });
+
+      // calls action refreshing the partial
+      function refreshPartial() {
+        $.ajax({
+          url: "/refresh"
+      })
+      }
+      </script>
+    <% end%>
   </body>
 </html>

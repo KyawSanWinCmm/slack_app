@@ -5,4 +5,5 @@ class MChannel < ApplicationRecord
                                     dependent:   :destroy
                                    
     has_many :m_channels, through: :passive_relationships, source: :m_channel
+    validates :channel_name,  presence: true, length: { maximum: 50 }
 end

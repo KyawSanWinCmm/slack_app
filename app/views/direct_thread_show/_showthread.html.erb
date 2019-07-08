@@ -2,43 +2,53 @@
 <div id="main">
 
 
-<div class="txtmsg">
-<h1><%= @s_user.name%> </h1>
-    <hr>
+
 <div>
-    <ul class="users">
-            <li><%= @send_user.name%> <%= @t_direct_message.created_at.strftime("at %I:%M%p") %>  
+<h2 class="style1"><%= @s_user.name%> </h2>
+
+    <hr>
+
+    <p class="style21">1</p>
+
+    <p class="style22"><%= @send_user.name%></p>
+    
+    <p class="style23"><%= @t_direct_message.created_at.strftime("%F") %>/<%= @t_direct_message.created_at.strftime("%I:%M%p") %></p>
             
-            <br>
-                <%= @t_direct_message.directmsg%>
-    </ul>
+    <p class="style3"> -->  <%= @t_direct_message.directmsg%></p>
+
 </div>
 <hr>
-<h4>Reply</h4>
-<hr>
-<div class="messagepannel">
-    <ul class="users">
+    <div class="txtmsg">
+        <% @count = 0 %>
+        <h2 class="style1">Reply</h2>
+        <hr>
+        
         <% @t_direct_threads.each do |t_direct_thread| %>
-            <p>
-            <li><%= t_direct_thread.name%> <%= t_direct_thread.created_at.strftime("at %I:%M%p") %> 
-                <% if @t_direct_star_thread_msgids.include? t_direct_thread.id %>
+
+            <p class="style21"><%= @count += 1 %></p>
+
+            <p class="style22"><%= t_direct_thread.name%></p>
+
+            <p class="style23"><%= t_direct_thread.created_at.strftime("%F") %>/<%= t_direct_thread.created_at.strftime(" %I:%M%p") %></p>
+
+            <p class="style24"></p>
+            
+            <% if @t_direct_star_thread_msgids.include? t_direct_thread.id %>
                     | <%= link_to "", unstarthread_path(:id => t_direct_thread.id), class:'fas fa-star' %></li>
                 <% else %>
                     | <%= link_to "",  starthread_path(:id => t_direct_thread.id), class:'far fa-star' %></li>
-                <% end %> 
+            <% end %> 
+
+            <p class="style3"> -->  <%= t_direct_thread.directthreadmsg%></p>
                 
-                <%= t_direct_thread.directthreadmsg%>
-                </p>
         <% end %>
-    </ul>
-</div>
+    </div>
+
 <div class="textbox">
     <%= form_for(:session, url: directthreadmsg_path) do |f| %>
     <%= f.text_field :message, class: 'form-control' %>
     <%= f.submit "Send", class: "btn btn-primary" %>
     <% end %>
-</div>
-</div>
 </div>
 <div>
     <%= render 'leftpanel/leftpanel' %>

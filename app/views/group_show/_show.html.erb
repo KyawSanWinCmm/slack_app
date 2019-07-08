@@ -1,37 +1,13 @@
 
 <div id="main">
-
-
-<div class="txtmsg">
-<h1><%= @s_channel.channel_name%> </h1>
-    <hr>
-<div class="messagepannel">
-    <ul class="users">
-        <% @t_group_messages.each do |t_group_message| %>
-            <p>
-            <li><%= t_group_message.name%> <%= t_group_message.created_at.strftime("at %I:%M%p")%>
-             | <%= link_to t_group_message.count,  t_group_message, class: 'fab fa-facebook-messenger'%>  
-            
-             <% if @t_group_star_msgids.include? t_group_message.id %>
-                | <%= link_to "",  groupunstar_path(:id => t_group_message.id), class:'fas fa-star' %>
-             <% else %>
-                | <%= link_to "",  groupstar_path(:id => t_group_message.id), class:'far fa-star'%>
-             <% end %>
-
-             </li>
-                <%= t_group_message.groupmsg%>
-            </p>
-        <% end %>
-    </ul>
-</div>
+<%= render 'group_show/groupmsglists' %>
 <div class="textbox">
     <%= form_for(:session, url: groupmsg_path) do |f| %>
     <%= f.text_field :message, class: 'form-control' %>
     <%= f.submit "Send", class: "btn btn-primary" %>
     <% end %>
 </div>
-</div>
-</div>
+
 <div>
     <%= render 'leftpanel/leftpanel' %>
 </div>

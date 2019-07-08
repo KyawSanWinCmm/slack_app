@@ -1,0 +1,2 @@
+module ChannelUserHelper
+end

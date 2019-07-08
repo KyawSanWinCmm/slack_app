@@ -1,0 +1,10 @@
+<% unless session[:s_user_id].nil?%>
+    $("#directlist").html("<%= j(render 'direct_show/show', data: @t_direct_messages) %>");
+<% end %>
+
+<% unless session[:s_channel_id].nil?%>
+    $("#grouplist").html("<%= j(render 'group_show/show', data: @t_group_messages) %>");
+<% end %>
+
+$("#channellists").html("<%= j(render 'leftpanel/leftpanel', data: @m_channels) %>");
+$("#userlists").html("<%= j(render 'leftpanel/leftpanel', data: @m_users) %>");

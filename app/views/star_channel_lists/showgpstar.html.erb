@@ -1,0 +1,30 @@
+<% provide(:title, 'Channel Star Lists') %>
+
+
+<div>
+<%=  @gpstar.each do |gs| %>
+    <ul class="unreadthread">
+    <h2>Channel Star</h2>
+    <li><%= gs.id %>     <%= gs.name %>        <%= gs.created_at %></li>
+        <%= gs.groupmsg %>
+    <hr>
+    </ul>
+<% end %>
+</div>
+
+<div>
+<%=  @gpthreadstar.each do |gts| %>
+    <ul class="unreadthread">
+    <h2>Channel Thread Star</h2>
+    <li><%= gts.id %>     <%= gts.name %>        <%= gts.created_at %></li>
+        <%= gts.groupthreadmsg %>
+    <hr>
+    </ul>
+<% end %>
+</div>
+
+
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>
+  

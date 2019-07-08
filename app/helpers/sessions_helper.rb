@@ -3,6 +3,7 @@ module SessionsHelper
     def log_in(t_user_workspace)
         session[:user_id] = t_user_workspace.userid
         session[:workspace_id] = t_user_workspace.workspaceid
+        session[:s_user_id] = 1
     end
 
     # Returns true if the given user is the current user.

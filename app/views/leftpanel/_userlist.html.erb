@@ -1,0 +1,15 @@
+							
+<div id="userlists">
+<% @m_users.each do |m_user| %>
+	<% if@m_user.id !=  m_user.id %>
+	<ul class="countnumber">
+		<li class="countnumberone">
+		<%= link_to m_user.name, m_user %> 
+		</li>
+		<li class="countnumbertwo">
+			<%=  m_user.email %>
+		</li>	
+	</ul>
+	<% end %>
+<% end %>
+</div>

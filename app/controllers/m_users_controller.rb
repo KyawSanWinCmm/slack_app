@@ -13,8 +13,6 @@ class MUsersController < ApplicationController
     @m_channel.channel_name = @m_user.profile_image
     @m_channel.channel_status = 1
 
-    @m_user.profile_image = nil
-    @m_user.remember_digest = nil
     @m_user.active_status = 1
     @m_user.admin = 1
     @m_user.member_status = 1
@@ -22,11 +20,17 @@ class MUsersController < ApplicationController
     status = true
 
     if status &&  @m_user.save
+      MUser.where(id: @m_user.id).update_all(remember_digest: nil, profile_image: nil)
     else status = false
     end
 
-    if status && @m_workspace.save
-    else status = false
+    @t_workspace = MWorkspace.find_by(workspace_name: @m_workspace.workspace_name)
+    if(@t_workspace.nil?)
+      if status && @m_workspace.save
+      else status = false
+      end
+    else
+      @m_workspace = @t_workspace
     end
 
     @t_user_workspace = TUserWorkspace.new
@@ -39,8 +43,13 @@ class MUsersController < ApplicationController
 
     @m_channel.m_workspace_id = @m_workspace.id
 
-    if status && @m_channel.save
-    else status = false
+    @t_channel = MChannel.find_by(channel_name: @m_channel.channel_name)
+    if(@t_channel.nil?)
+      if status && @m_channel.save
+      else status = false
+      end
+    else
+      @m_channel = @t_channel
     end
 
     @t_user_channel = TUserChannel.new
@@ -58,11 +67,12 @@ class MUsersController < ApplicationController
       flash[:success] = "Workspace Createion Complete."
       redirect_to root_url
     else
-      redirect_to workspace_url
+      render 'm_workspaces/new'
     end
   end
 
   def show
+    session.delete(:s_user_id)
     session[:s_user_id] =  params[:id]
     @m_workspace = MWorkspace.find_by(id: session[:workspace_id])
     @m_user = MUser.find_by(id: session[:user_id])
@@ -71,13 +81,20 @@ class MUsersController < ApplicationController
     INNER JOIN m_workspaces ON m_workspaces.id = t_user_workspaces.workspaceid").where("m_workspaces.id = ?", session[:workspace_id]);
     
     TDirectMessage.where(send_user_id: params[:id], receive_user_id: session[:user_id], read_status: 0).update_all(read_status: 1)
+    TDirectThread.joins("INNER JOIN t_direct_messages ON t_direct_messages.id = t_direct_threads.t_direct_message_id").where(
+      "(t_direct_messages.receive_user_id = ? and t_direct_messages.send_user_id = ? ) || (t_direct_messages.receive_user_id = ? and t_direct_messages.send_user_id = ? )", session[:user_id],  params[:id],  params[:id], session[:user_id]
+    ).where.not(m_user_id: session[:user_id], read_status: 1).update_all(read_status: 1)
 
-    @m_channels = MChannel.where(m_workspace_id: session[:workspace_id])
+    @m_channels = MChannel.distinct.select("m_channels.id,channel_name,channel_status,t_user_channels.message_count").joins(
+      "INNER JOIN t_user_channels ON t_user_channels.channelid = m_channels.id"
+    ).where("m_channels.m_workspace_id = ? and t_user_channels.userid = ?", session[:workspace_id], session[:user_id])
 
     @m_users.each do |muser|
       @direct_count = TDirectMessage.where(send_user_id: muser.id, receive_user_id: session[:user_id], read_status: 0)
 
-      @thread_count = TDirectThread.where.not(m_user_id: session[:user_id], read_status: 1)
+      @thread_count = TDirectThread.joins("INNER JOIN t_direct_messages ON t_direct_messages.id = t_direct_threads.t_direct_message_id").where(
+        "t_direct_threads.read_status = 0 and t_direct_threads.m_user_id = ? and ((t_direct_messages.send_user_id = ? and t_direct_messages.receive_user_id = ?) || (t_direct_messages.send_user_id = ? and t_direct_messages.receive_user_id = ?))", muser.id, muser.id, session[:user_id], session[:user_id], muser.id
+      )
       muser.email = ( @direct_count.size +  @thread_count.size).to_s
     end
 
@@ -91,8 +108,24 @@ class MUsersController < ApplicationController
     @temp_direct_star_msgids.each { |r| @t_direct_star_msgids.push(r.directmsgid) }
     end
 
+    
+
+  def confirm
+    puts params[:email]
+    puts params[:workspaceid]
+    puts params[:channelid]
+    @m_workspace = MWorkspace.find_by(id: params[:workspaceid])
+    @m_channel = MChannel.find_by(id: params[:channelid])
+
+    @m_user = MUser.new
+    @m_user.email = params[:email]
+    @m_user.remember_digest = @m_workspace.workspace_name
+    @m_user.profile_image = @m_channel.channel_name
+  end
+
   def user_params
     params.require(:m_user).permit(:name, :email, :password,
     :password_confirmation, :profile_image, :remember_digest)
   end
+
 end

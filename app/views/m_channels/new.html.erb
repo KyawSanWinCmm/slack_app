@@ -1,2 +1,49 @@
-<h1>MChannels#new</h1>
-<p>Find me in app/views/m_channels/new.html.erb</p>
+
+<div id="main">
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
+<h2 class="style1" style="text-align:center">チャンネル作成</h2>
+  <br><br>
+  <div class="container para">
+    <div class="col-md-6 col-md-offset-4">
+      <%=form_for(:session, url: channelcreate_url) do |f| %>
+        <div class="col-md-1">
+        <%= f.radio_button :channel_status, '0', :checked => true %> 
+        </div>
+        <div class="col-md-3">
+        <%= f.label :プライベート %>
+        </div>
+        <div class="col-md-1">
+        <%= f.radio_button :channel_status, '1'%>
+        </div>
+        <div class="col-md-3">
+        <%= f.label :パブリック %>
+        </div>
+        <br><br>
+
+        <%= f.label :チャンネル名%>
+        <%= f.text_field:channel_name, class:'form-control'%> 
+        <%= f.submit "Create Channel", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+  </div>
+                                
+                                
+                           
+</div>
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
