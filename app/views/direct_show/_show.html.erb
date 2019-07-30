@@ -1,17 +1,24 @@
-
 <div id="main">
+       
+<div class = "txtmsg">	
+<% @count = 0 %>
     <%= render 'direct_show/directmsglists' %>
-    <div class="textbox">
-        <%= form_for(:session, url: directmsg_path) do |f| %>
-        <%= f.text_field :message, class: 'form-control', id: 'tags' %>
-        <%= f.submit "Send", class: "btn btn-primary" %>
-        <% end %>
+    <div class = "textboxbg">
+        <div class="textbox">
+            <%= form_for(:session, url: directmsg_path) do |f| %>
+                <div class="col-md-11">
+                    <%= f.text_field :message, class: 'form-control' %>
+                </div>
+                <div class="col-md-1">
+                    <%= f.submit "Send", class: "btn btn-primary"%>
+                </div>
+            <% end %>
+        </div>
     </div>
 </div>
 </div>
 <div>
     <%= render 'leftpanel/leftpanel' %>
 </div>
-
 
 

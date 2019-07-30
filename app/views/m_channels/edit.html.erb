@@ -1,0 +1,44 @@
+<h2 class="style1" style="text-align:center">チャンネル作成</h2>
+  <br><br>
+  <div class="container para">
+    <div class="col-md-6 col-md-offset-4">
+      <%=form_for(@m_channel) do |f| %>
+        <%= f.hidden_field :id %>
+        <div class="col-md-1">
+        <% if @m_channel.channel_status==false%>
+        <%= f.radio_button :channel_status,'0',:checked=>true  %> 
+        </div>
+        <div class="col-md-3">
+        <%= f.label :プライベート %>
+        </div>
+        <div class="col-md-1">
+        <%= f.radio_button :channel_status,'1'%>
+        </div>
+        <div class="col-md-3">
+        <%= f.label :パブリック %>
+        </div>
+        <%else%>
+        <%= f.radio_button :channel_status,'0' %> 
+        </div>
+        <div class="col-md-3">
+        <%= f.label :プライベート %>
+        </div>
+        <div class="col-md-1">
+        <%= f.radio_button :channel_status,'1',:checked=>true%>
+        </div>
+        <div class="col-md-3">
+        <%= f.label :パブリック %>
+        </div>
+
+        <%end%>
+        <br><br>
+
+        <%= f.label :ChannelName%>
+        <%= f.text_field:channel_name, class:'form-control'%> 
+        <%= f.submit "Update", class: "btn btn-primary" %>
+        <% end %>
+    </div>
+  </div>
+  <div>
+    <%= render 'leftpanel/leftpanel' %>
+  </div>

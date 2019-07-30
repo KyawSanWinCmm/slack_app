@@ -1,9 +1,14 @@
-
-<div id="main">
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
-<div class="txtmsg">
-    #Welcome
-</div>
+<div class="bg">
+    <div class="container_home">
+        <div class="scroller">
+            <div class="inner">
+                <span>Hi! <%= @m_user.name %>.</span>
+                <span>Good Day.</span>
+                <span>Please Connect to your friends.</span>
+                <span>Welcome from <a class="blue">Slack </a> <a class="blueb">App</a>.</span>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
     <%= render 'leftpanel/leftpanel' %>

@@ -108,14 +108,11 @@ ActiveRecord::Schema.define(version: 2019_06_27_063024) do
 
   create_table "t_group_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "groupmsg"
-    t.integer "channelid"
     t.bigint "m_channel_id"
     t.bigint "m_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["m_channel_id", "created_at"], name: "index_t_group_messages_on_m_channel_id_and_created_at"
     t.index ["m_channel_id"], name: "index_t_group_messages_on_m_channel_id"
-    t.index ["m_user_id", "created_at"], name: "index_t_group_messages_on_m_user_id_and_created_at"
     t.index ["m_user_id"], name: "index_t_group_messages_on_m_user_id"
   end
 

@@ -1,22 +1,21 @@
 
 <div id="main">
+    <div>
+    <div class="title">
+        <h2 class="style1"><%= @s_user.name%> </h2>
+    </div>
 
+        <hr>
 
+        <p class="style21">1</p>
 
-<div>
-<h2 class="style1"><%= @s_user.name%> </h2>
+        <p class="style22"><%= @send_user.name%></p>
+        
+        <p class="style23"><%= @t_direct_message.created_at.strftime("%F") %>/<%= @t_direct_message.created_at.strftime("%I:%M%p") %></p>
+                
+        <p class="style3"> -->  <%= @t_direct_message.directmsg%></p>
 
-    <hr>
-
-    <p class="style21">1</p>
-
-    <p class="style22"><%= @send_user.name%></p>
-    
-    <p class="style23"><%= @t_direct_message.created_at.strftime("%F") %>/<%= @t_direct_message.created_at.strftime("%I:%M%p") %></p>
-            
-    <p class="style3"> -->  <%= @t_direct_message.directmsg%></p>
-
-</div>
+    </div>
 <hr>
     <div class="txtmsg">
         <% @count = 0 %>
@@ -43,13 +42,24 @@
                 
         <% end %>
     </div>
-
-<div class="textbox">
-    <%= form_for(:session, url: directthreadmsg_path) do |f| %>
-    <%= f.text_field :message, class: 'form-control' %>
-    <%= f.submit "Send", class: "btn btn-primary" %>
-    <% end %>
 </div>
+
+    <div class = "textboxbg">
+        <div class="textbox">
+            <%= form_for(:session, url: directthreadmsg_path) do |f| %>
+                <div class="col-md-11">
+                    <%= f.text_field :message, class: 'form-control' %>
+                </div>
+                <div class="col-md-1">
+                    <%= f.submit "Send", class: "btn btn-primary" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
 <div>
     <%= render 'leftpanel/leftpanel' %>
 </div>
+
+<script>
+    window.scrollTo(0,document.body.scrollHeight);
+</script>

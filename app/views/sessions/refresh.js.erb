@@ -1,10 +1,23 @@
-<% unless session[:s_user_id].nil?%>
+<% unless @m_channels.nil? %>
+    $("#channellists").html("<%= j(render 'leftpanel/leftpanel', data: @m_channels) %>");
+<% end %>
+
+<% unless @m_users.nil? %>
+    $("#userlists").html("<%= j(render 'leftpanel/leftpanel', data: @m_users) %>");
+<% end %>
+
+<% unless @t_direct_messages.nil? %>
     $("#directlist").html("<%= j(render 'direct_show/show', data: @t_direct_messages) %>");
 <% end %>
 
-<% unless session[:s_channel_id].nil?%>
-    $("#grouplist").html("<%= j(render 'group_show/show', data: @t_group_messages) %>");
+<% unless @t_direct_threads.nil? %>
+    $("#main").html("<%= j(render 'direct_thread_show/showthread', data: @t_direct_threads) %>");
 <% end %>
 
-$("#channellists").html("<%= j(render 'leftpanel/leftpanel', data: @m_channels) %>");
-$("#userlists").html("<%= j(render 'leftpanel/leftpanel', data: @m_users) %>");
+<% unless @t_group_messages.nil? %>
+    $("#grouplist").html("<%= j(render 'group_show/groupmsglists', data: @t_group_messages) %>");
+<% end %>
+
+<% unless @t_group_threads.nil? %>
+    $("#main").html("<%= j(render 'group_thread_show/showthread', data: @t_group_threads) %>");
+<% end %>

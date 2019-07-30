@@ -1,31 +1,61 @@
    
 <div class = "txtmsg">	
 <% @count = 0 %>
-    <div id="directlist">			
-            <h2 class="style1"><%= @s_user.name%> </h2>
-                <% @t_direct_messages.each do |t_direct_message| %>
+    <div id="directlist">
+        <div class = "title">			
+            <h2 class="style1"><%= @s_user.name%></h2>
+        </div>
+        
+        <div class="style1" style="padding-top: 80px">
+                <%= link_to "Load Mode",  refresh_direct_url , class:'glyphicon glyphicon-refresh'%>
+        </div>
+            <%  @t_direct_message_dates.each do |t_direct_date| %>
+                <% if @t_direct_message_datesize.include?t_direct_date.created_date.to_s %>
+                        <h2 class="style1"><%= t_direct_date.created_date.to_s %></h2>
+                        <% @t_direct_messages.each do |t_direct_message| %>
+                                <% if t_direct_date.created_date.to_s == t_direct_message.created_at.strftime("%F").to_s %>
+                                        <p class="style21"><%= @count += 1 %></p>
 
-                <p class="style21"><%= @count += 1 %></p>
+                                        <p class="style22"><%= t_direct_message.name%></p> 
 
-                <p class="style22"><%= t_direct_message.name%></p> 
+                                        <p class="style23">
+                                        <%= t_direct_message.created_at.strftime("%I:%M%p") %>
+                                        <%
+                                        @seconds_diff = (Time.zone.now - t_direct_message.created_at).to_i.abs
 
-                <p class="style23"><%= t_direct_message.created_at.strftime("%F") %>/<%= t_direct_message.created_at.strftime("%I:%M%p") %></p>
+                                        @days = @seconds_diff / (3600 * 24)
+                                        @hours = @seconds_diff / 3600
+                                        @seconds_diff -= @hours * 3600
 
-                <p class="style24"><%= link_to t_direct_message.count,  t_direct_message, class: 'fab fa-facebook-messenger'%></p>
+                                        @minutes = @seconds_diff / 60
+                                        @seconds_diff -= @minutes * 60
 
-                
-                <% if @t_direct_star_msgids.include? t_direct_message.id %>
-                        <%= link_to "",  unstar_path(:id => t_direct_message.id), class:'fas fa-star'%>
-                <% else %>
-                        <%= link_to "",  star_path(:id => t_direct_message.id), class:'far fa-star'%>
+                                        @seconds = @seconds_diff
+                                        %>
+                                        </p>
+
+                                        <p class="style24"><%= link_to t_direct_message.count,  t_direct_message, class: 'fab fa-facebook-messenger'%></p>
+
+                                        
+                                        <% if @t_direct_star_msgids.include? t_direct_message.id %>
+                                                <%= link_to "",  unstar_path(:id => t_direct_message.id), class:'fas fa-star'%>
+                                        <% else %>
+                                                <%= link_to "",  star_path(:id => t_direct_message.id), class:'far fa-star'%>
+                                        <% end %>
+                                        
+
+                                        <p class="style3"> -->  <%= t_direct_message.directmsg%></p>
+                                        <hr>
+                                <% end %>
+                        <% end %>
                 <% end %>
-                
-
-                <p class="style3"> -->  <%= t_direct_message.directmsg%></p>
-                <hr>
-                <% end %>
+        <% end %>
     </div>
  </div>
+
+ <script>
+        window.scrollTo(0,document.body.scrollHeight);
+ </script>
 
 
 

@@ -45,9 +45,10 @@ body {
 }
 
 /* navbar */
-.navbar-default {
-    background-color: #00CED1;
-    border-color: #E7E7E7;
+.navbar{ 
+  color: white;
+  background: black;
+  margin-bottom: 0px;
 }
 
 ul.nav a{color: white !important; }
@@ -201,7 +202,7 @@ a, a:hover{
 }
 
 #sidebar ul li a {
-  padding: 10px;
+  padding: 8px;
   display: block;
 }
 
@@ -221,7 +222,7 @@ a, a:hover{
 #sidebar {
   min-width: 210px;
   max-width: 210px;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .a{
@@ -249,10 +250,7 @@ a, a:hover{
 .d:hover{
   color:red;
 }
-.navbar{
-  color: white;
-  background: black;
-}
+
 .navbar .nav .wsp a:hover{
   color: #111111;
   background:#cccccc;
@@ -293,6 +291,9 @@ a, a:hover{
 #channellists{
   margin-left:15px;
 }
+#channelpubliclists{
+  margin-left:15px;
+}
 #userlists{
   margin-left:15px;
 }
@@ -312,6 +313,24 @@ a, a:hover{
   }
 
   ul.countnumber li.countnumbertwo{
+    margin-top:8px;
+    margin-left: 5px;
+  }
+
+  ul.s_countnumber {
+    list-style-type: none;
+    margin-top: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: blue;
+  }
+
+  ul.s_countnumber li {
+    float: left;
+    display: block; 
+  }
+
+  ul.s_countnumber li.countnumbertwo{
     margin-top:8px;
     margin-left: 5px;
   }
@@ -348,6 +367,7 @@ a, a:hover{
 
 
 .sidenav {
+  margin-top: 32px;
   height: 100%;
   width: 200px;
   position: fixed;
@@ -360,7 +380,6 @@ a, a:hover{
 }
 
 .sidenav a {
-  padding: 6px 6px 6px 32px;
   text-decoration: none;
   font-size: 13px;
   color: white;
@@ -388,6 +407,10 @@ a, a:hover{
   margin-left:330px;
 }
 .style1 {
+  margin-left:250px;
+  
+}
+.style2 {
   margin-left:250px;
   
 }
@@ -465,4 +488,62 @@ a, a:hover{
   color:black;
   text-decoration:underline;
 }
+
+.countnumbertwo{
+  border: 2px solid red;
+  border-radius: 3px;
+  padding: 0px 3px 0px 3px;
+  background-color: red;
+}
+
+div.title{
+  top: 0;
+  position: fixed;
+  background-color: #F4F4F4;
+  border: #F4F4F4 solid 2px;
+  width: 100%;
+}
+
+div.textboxbg{
+  text-align: center;
+  bottom: 0;
+  position: fixed;
+  background-color: #F4F4F4;
+  border: #F4F4F4 solid 2px;
+  width: 100%;
+  height: 70px;
+}
+
+/* forms */
+.txtmsg{
+  margin-bottom: 70px;
+}
+
+#cuserlist{
+  padding-left: 105px;
+}
+
+/* background image */
+
+.bg {
+  /* The image used */
+  background-image: url('home.png');
+
+  /* Full height */
+  height: 20vh; 
+  width: 20%;
+  position: fixed;
+  left: 50%;
+  margin-left: -5%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+
+
 

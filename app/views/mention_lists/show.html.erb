@@ -1,0 +1,67 @@
+<% provide(:title, 'Mention') %>
+<div id="main">
+
+<h1>Mention Lists</h1>
+
+<div>
+    <h2 class="style1">Group Mention Lists</h2>
+
+    <% @count = 0 %>
+    <% @t_group_messages.each do |t_group_message| %>
+
+    <h4 class="style2"><%= t_group_message.channel_name %></h4>
+
+    <p class="style21"><%= @count += 1 %></p>
+
+    <p class="style22"><%= t_group_message.name%></p>
+    
+    <p class="style23"><%= t_group_message.created_at.strftime("%F") %>/<%= t_group_message.created_at.strftime("%I:%M%p") %></p>
+
+    <p class="style24"></p> 
+            
+    <% if @t_group_star_msgids.include? t_group_message.id %>
+        <%= link_to "",  "", class:'fas fa-star'%>
+    <% else %>
+        <%= link_to "",  "", class:'far fa-star'%>
+    <% end %>
+            
+    <p class="style3"> -->  <%= t_group_message.groupmsg%></p>
+    <hr>
+    <% end %>
+
+</div>
+
+<div>
+    <h2 class="style1">Group Thread Mention Lists</h2>
+
+    <% @count = 0 %>
+    <% @t_group_threads.each do |t_group_thread| %>
+
+    <h4 class="style2"><%= t_group_thread.channel_name%></h4>
+
+    <p class="style21"><%= @count += 1 %></p>
+
+    <p class="style22"><%= t_group_thread.name%></p>
+    
+    <p class="style23"><%= t_group_thread.created_at.strftime("%F") %>/<%= t_group_thread.created_at.strftime("%I:%M%p") %></p>
+
+    <p class="style24"></p> 
+            
+    <% if @t_group_star_thread_msgids.include? t_group_thread.id %>
+        <%= link_to "",  "", class:'fas fa-star'%>
+    <% else %>
+        <%= link_to "",  "", class:'far fa-star'%>
+    <% end %>
+            
+    <p class="style3"> -->  <%= t_group_thread.groupthreadmsg%></p>
+    <hr>
+    <% end %>
+
+</div>
+
+</div>
+    
+
+<div>
+    <%= render 'leftpanel/leftpanel' %>
+</div>

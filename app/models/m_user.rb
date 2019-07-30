@@ -55,7 +55,6 @@ class MUser < ApplicationRecord
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
-
     private
 
     # Converts email to all lower-case.

@@ -1,94 +1,117 @@
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-<nav class="navbar justify-content-between dropright">
-	<div class="btn-group dropright list-group nav">
-		<a href="#" class="wsp dropdown-toggle  list-group-item list-group-item-action" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-		<%= @m_workspace.workspace_name %>
-		</a>
-		<span class="cc list-group-item list-group-item-action "><%= @m_user.name %></span></span>
-		<div class="dp dropdown-menu box">
-			<!-- Dropdown menu links -->
-			<ul class=" sbox list-unstyled text-center list-group">
-				<li>
-					<a class="list-group-item list-group-item-action" href="#">メンバーを招待する</a>
-				</li>
-				<li>
-					<a class="list-group-item list-group-item-action" href="#">プロフィール&アカウント</a>
-				</li>
-				<li>
-					<a class="list-group-item list-group-item-action" href="#">メンバ管理</a>
-				</li>
-				<li>
-					<a class="list-group-item list-group-item-action" tabindex="-1" href="#">サインアウト</a>
-				</li>
-			</ul>
+	<nav class="navbar justify-content-between dropright">
+		<div class="btn-group dropright list-group nav">
+			<span class="cc list-group-item list-group-item-action "><%= @m_workspace.workspace_name %></span>
+			<span class="cc list-group-item list-group-item-action "><%= @m_user.name %></span></span>
 		</div>
-	</div>
+	</nav>
 	
 <div class="wrapper">
 	<div class="row">
 		<div class="col-sm-3">
 			<nav id="sidebar">
 				<ul class="list-unstyled components" >
+					<ul class="countnumber">
+					<div id = "allcount">
+						<li class="countnumberone">
+							<%= link_to "全未読", allunread_url, class: 'fa fa-align-justify' %>
+						</li>
+						<% if @all_unread_count != 0 %> 
+						<li class="countnumbertwo">
+							<%=  @all_unread_count %>
+						</li>
+						<% end %>
+					</div>
+					</ul>
 					<li class="form-inline my-0 my-lg-0">
-						<a href="#"><i class="fa fa-align-justify"></i>全未読</a>
+						<%= link_to "スレッド" , thread_url, class: 'fa fa-comments' %>
 					</li>
 					<li class="form-inline my-0 my-lg-0">
-						<a href="#"><i class="fa fa-comments"></i>スレッド</a>
+						<%= link_to "スター" , starlists_url,class: 'fa fa-star' %>
 					</li>
 					<li class="form-inline my-0 my-lg-0">
-						<%= link_to "メンバーを招待する" , memberinvite_url, class: 'fa fa-plus-circle' %>
+						<%= link_to "アクティピテイ" , mentionlists_url, class: 'fas fa-at'%>
+					</li>
+					<% if @m_user.admin == true %>
+					<li class="form-inline my-0 my-lg-0">
+						<%= link_to "ユーザ管理" , usermanage_url, class: 'fa fa-edit'%>
+					</li>
+					<% end %>
+					<li class="form-inline my-0 my-lg-0">
+						<%= link_to "メンバーを招待する" , memberinvite_url, class: 'fa fa-plus-circle'%>
 					</li>
 					<li>
-						<%= link_to "チャンネル" , channelcreate_url, class: 'fa fa-plus-circle' %>
+						<%= link_to "チャンネル" , channelcreate_url,class: 'fa fa-plus-circle' %>
 						<div id="channellists">
 						<% @m_channels.each do |m_channel| %>
-							<ul class="countnumber">
-							<% if m_channel.channel_status == true%>
+							<% if session[:s_channel_id] !=  m_channel.id.to_s%>
+								<ul class="countnumber">
+							<% else %>
+								<ul style= "background-color: #2E86C1" class="countnumber">
+							<% end %>
 								<li class="countnumberone">
-									<%= link_to m_channel.channel_name, m_channel, class: 'fas fa-hashtag' %>
-								</li>
-								<% if m_channel.message_count > 0 %> 
-									<li class="countnumbertwo">
-										<%=  m_channel.message_count %>
-									</li>
-								<% end %> 
-							<%  else %>
-							
-								<li class="countnumberone">
+									<% if m_channel.channel_status == true%>
+										<%= link_to m_channel.channel_name, m_channel, class: 'fas fa-hashtag' %>
+									<% else%>
 									<%= link_to m_channel.channel_name, m_channel , class: 'fa fa-lock'%>
+									<% end%>
 								</li>
 								<% if m_channel.message_count > 0 %> 
 									<li class="countnumbertwo">
 										<%=  m_channel.message_count %>
 									</li>
-								<% end %> 
-							<%end%>
+								<% end %>
 							</ul>
+						<% end %>
+						</div>
+
+						<div id="channelpubliclists">
+						<% @m_p_channels.each do |m_channel| %>
+							<% unless @m_channelsids.include? m_channel.id%>	
+								<% if session[:s_channel_id] !=  m_channel.id.to_s%>
+								<ul class="countnumber">
+								<% else %>
+									<ul style= "background-color: #2E86C1" class="countnumber">
+								<% end %>					
+									<li class="countnumberone">
+									<% if m_channel.channel_status == true%>
+										<%= link_to m_channel.channel_name, m_channel,  class: 'fas fa-hashtag' %>
+									<% else %>
+										<%= link_to m_channel.channel_name, m_channel , class: 'fa fa-lock'%>
+									<% end %>
+									</li>
+								</ul>
+							<% end %>
 						<% end %>
 						</div>
 					</li>
 					<li>
-						<a href="#" class="channel">ダイレクトメッセージ</a>
-						
-							<li id="username">
-								<%=  @m_user.name %> (自分)
-							</li>
-							
+						<a href="#" class="channel">ダイレクトメッセージ</a>							
 							<div id="userlists">
-							<% @m_users.each do |m_user| %>
-								<% if@m_user.id !=  m_user.id %>
 								<ul class="countnumber">
 									<li class="countnumberone">
-									<%= link_to m_user.name, m_user %> 
+										<%= link_to @m_user.name+"(自分)", "#"%>
 									</li>
-									<% if m_user.email != '0' %> 
+								</ul>
+							<% @count = 0%>
+							<% @m_users.each do |m_user| %>
+								<% if@m_user.id !=  m_user.id %>
+								<% if session[:s_user_id] !=  m_user.id.to_s %>
+								<ul class="countnumber">
+								<% else %>
+								<ul style="background-color: #2E86C1" class="countnumber">
+								<% end %>
+									<li class="countnumberone">
+									<%= link_to m_user.name, m_user%> 
+									</li>
+									<% if @direct_msgcounts[@count] != 0 %> 
 										<li class="countnumbertwo">
-										<%=  m_user.email %>
+											<%=  @direct_msgcounts[@count] %>
 										</li>
 									<% end %> 	
 								</ul>
 								<% end %>
+								<% @count += 1 %>
 							<% end %>
 							</div>
 					</li>                       
@@ -96,6 +119,7 @@
 			 </nav>
 		</div>
 	</div>
+	
 </div>   
 
 <div>

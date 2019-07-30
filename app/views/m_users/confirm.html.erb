@@ -25,6 +25,8 @@
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
 
+        <%= f.hidden_field :admin, value: '0', class: 'form-control' %>
+        
         <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
   </div>

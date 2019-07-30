@@ -1,14 +1,48 @@
 
-<div id="main">
+<div id="main"> 
 <%= render 'group_show/groupmsglists' %>
-<div class="textbox">
-    <%= form_for(:session, url: groupmsg_path) do |f| %>
-    <%= f.text_field :message, class: 'form-control' %>
-    <%= f.submit "Send", class: "btn btn-primary" %>
-    <% end %>
-</div>
+  <div class = "textboxbg">
+    <div class="textbox">
+      <% if @m_channelsids.include?session[:s_channel_id].to_i%>
+          <%= form_for(:session, url: groupmsg_path) do |f| %>
+            <div class="col-md-11">
+              <%= f.text_field :message, class: 'form-control', data: { autocomplete_source: @m_channel_users.order(:name).map { |t| 
+                { :label => '@' + t.name} } }, id: 'tags' %>
+            </div>
+            <div class="col-md-1">
+              <%= f.submit "Send", class: "btn btn-primary"%>
+            </div>
+            <%= f.hidden_field :memtion_name, class: 'memtion_name' %>
+          <% end %>
+        <% else %>
+          <div style="padding-bottom: 20px" >
+            <%= link_to "Join into channel", channeluserjoin_path(userid: session[:user_id]), class: 'btn btn-primary'%>
+          </div>
+        <% end %>
+    </div>
+  </div>
 
 <div>
     <%= render 'leftpanel/leftpanel' %>
 </div>
+
+
+<script>
+ $( "#tags" ).autocomplete({
+      source: $('#tags').data('autocomplete-source'),
+      position: {
+        my: "left bottom",
+        at: "left top",
+    },
+    select: function(event, ui) {
+      event.preventDefault();
+      this.value = ui.item.label
+      $('.memtion_name').val(ui.item.value)
+    }
+    });
+
+  $('#stop').click(function() {
+	  clearInterval(yourInterval);
+  });
+</script>
 

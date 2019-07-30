@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <%= favicon_link_tag 'icon.png' %>
   <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= render 'layouts/rails_default' %>
     <%= render 'layouts/shim' %>
+
+    
+    <% unless session[:workspace_id].nil?%>
+      <script>
+      var yourInterval
+
+      $(document).ready(function () {
+          // will call refreshPartial every 3 seconds
+          yourInterval = setInterval(refreshPartial, 3000)
+      });
+
+      // calls action refreshing the partial
+      function refreshPartial() {
+        //clearInterval(yourInterval)
+        $.ajax({
+          url: "/refresh"
+      })
+      }
+
+      function stop() { 
+        clearTimeout(yourInterval); 
+      } 
+      </script>
+    <% end%>
   </head>
 
   <body>
@@ -17,23 +42,8 @@
     <% end %>
     <%= yield %>
     </div>
-    <!-- <%= render 'layouts/footer' %> -->
-
-    <% unless session[:workspace_id].nil?%>
-      <script>
-      $(document).ready(function () {
-          // will call refreshPartial every 3 seconds
-          setInterval(refreshPartial, 5000)
-
-      });
-
-      // calls action refreshing the partial
-      function refreshPartial() {
-        $.ajax({
-          url: "/refresh"
-      })
-      }
-      </script>
+    <% if session[:workspace_id].nil?%>
+      <%= render 'layouts/footer' %> 
     <% end%>
   </body>
 </html>

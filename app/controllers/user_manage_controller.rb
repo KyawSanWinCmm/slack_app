@@ -1,26 +1,41 @@
+#Slack System
+#Direct Message Controller 
+#Authorname-NyiNyiMinThant@CyberMissions Myanmar Company limited 
+#@Since 27/06/2019
+#Version 1.0.0
+
 class UserManageController < ApplicationController
-    def usermanage
-        @m_workspace = MWorkspace.find_by(id: session[:workspace_id])
-        @m_user = MUser.find_by(id: session[:user_id])
-        @m_users = MUser.joins("INNER JOIN t_user_workspaces ON t_user_workspaces.userid = m_users.id  
-                                INNER JOIN m_workspaces ON m_workspaces.id = t_user_workspaces.workspaceid AND  m_workspaces.id = 1") 
-                                
-        @m_channels = MChannel.distinct.select("m_channels.id,channel_name,channel_status,t_user_channels.message_count").joins(
-            "INNER JOIN t_user_channels ON t_user_channels.channelid = m_channels.id"
-            ).where("(m_channels.m_workspace_id = ? and t_user_channels.userid = ? and m_channels.channel_status = 0) or ( m_channels.m_workspace_id = ? and m_channels.channel_status = 1)", session[:workspace_id], session[:user_id], session[:workspace_id])
-                
-        @t_direct_messages = TDirectMessage.select("name, directmsg, t_direct_messages.id as id, t_direct_messages.created_at as created_at").joins(
-                                                    "INNER JOIN m_users ON m_users.id = t_direct_messages.send_user_id").order(id: :asc)
+  def usermanage
+    #check unlogin user
+    checkuser
 
-        @m_users.each do |muser|
-            @direct_count = TDirectMessage.where(send_user_id: muser.id, receive_user_id: session[:user_id], read_status: 0)
-                                                                                                
-            @thread_count = TDirectThread.where.not(m_user_id: session[:user_id], read_status: 1)
-            muser.email = ( @direct_count.size +  @thread_count.size).to_s
-        end
-    end
+    session.delete(:s_user_id)
+    session.delete(:s_channel_id)
+    session.delete(:s_direct_message_id)
+    session.delete(:s_group_message_id)
+    session.delete(:r_direct_size)
+    session.delete(:r_group_size)
 
-    def edit
-    end
-    
+    @user_manages_activate = MUser.select("m_users.id,name,email,member_status").joins("join t_user_workspaces on t_user_workspaces.id = m_users.id")
+    .where("t_user_workspaces.id = m_users.id and admin <> 1 and member_status = 1 and t_user_workspaces.workspaceid = ?",session[:workspace_id])
+
+    @user_manages_deactivate = MUser.select("m_users.id,name,email,member_status").joins("join t_user_workspaces on t_user_workspaces.id = m_users.id")
+    .where("t_user_workspaces.id = m_users.id and admin <> 1 and member_status = 0 and t_user_workspaces.workspaceid = ?",session[:workspace_id])
+
+    @user_manages_admin = MUser.select("name,email").joins("join t_user_workspaces on t_user_workspaces.id = m_users.id")
+    .where("t_user_workspaces.id = m_users.id and m_users.admin = 1 and t_user_workspaces.workspaceid = ?",session[:workspace_id])
+
+    #call from ApplicationController for retrieve home data
+    retrievehome
+  end
+
+  def edit
+    MUser.where(id: params[:id]).update_all(member_status: 0)
+    redirect_to action:"usermanage"
+  end
+
+  def update
+    MUser.where(id: params[:id]).update_all(member_status: 1)
+    redirect_to action:"usermanage"
+  end
 end
