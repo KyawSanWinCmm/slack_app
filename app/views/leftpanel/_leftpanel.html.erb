@@ -90,7 +90,7 @@
 							<div id="userlists">
 								<ul class="countnumber">
 									<li class="countnumberone">
-										<%= link_to @m_user.name+"(自分)", "#"%>
+										<%= link_to @m_user.name+"(自分)", "#", class: 'glyphicon glyphicon-user'%>
 									</li>
 								</ul>
 							<% @count = 0%>
@@ -102,7 +102,7 @@
 								<ul style="background-color: #2E86C1" class="countnumber">
 								<% end %>
 									<li class="countnumberone">
-									<%= link_to m_user.name, m_user%> 
+									<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user'%> 
 									</li>
 									<% if @direct_msgcounts[@count] != 0 %> 
 										<li class="countnumbertwo">
