@@ -9,34 +9,47 @@ class DirectMessageController < ApplicationController
     #check unlogin user
     checkuser
 
-    @t_direct_message = TDirectMessage.new
-    @t_direct_message.directmsg = params[:session][:message]
-    @t_direct_message.send_user_id = session[:user_id]
-    @t_direct_message.receive_user_id = session[:s_user_id]
-    @t_direct_message.read_status = 0
-    @t_direct_message.save
+    if session[:s_user_id].nil?
+      redirect_to home_url
+    else
+      @t_direct_message = TDirectMessage.new
+      @t_direct_message.directmsg = params[:session][:message]
+      @t_direct_message.send_user_id = session[:user_id]
+      @t_direct_message.receive_user_id = session[:s_user_id]
+      @t_direct_message.read_status = 0
+      @t_direct_message.save
 
-    session.delete(:r_direct_size)
+      session.delete(:r_direct_size)
 
-    MUser.where(id: session[:s_user_id]).update_all(remember_digest: "1")
-    
-    @user = MUser.find_by(id: session[:s_user_id])
-    redirect_to @user
+      MUser.where(id: session[:s_user_id]).update_all(remember_digest: "1")
+      
+      @user = MUser.find_by(id: session[:s_user_id])
+      redirect_to @user
+    end
   end
 
   def showthread
     #check unlogin user
     checkuser
 
-    @t_direct_thread = TDirectThread.new
-    @t_direct_thread.directthreadmsg = params[:session][:message]
-    @t_direct_thread.t_direct_message_id = session[:s_direct_message_id]
-    @t_direct_thread.m_user_id = session[:user_id]
-    @t_direct_thread.read_status = 0
-    @t_direct_thread.save
-    MUser.where(id: session[:s_user_id]).update_all(remember_digest: "1")
+    if session[:s_direct_message_id].nil?
+      unless session[:s_user_id].nil?
+        @user = MUser.find_by(id: session[:s_user_id])
+        redirect_to @user
+      end
+    elsif session[:s_user_id].nil?
+      redirect_to home_url
+    else
+      @t_direct_thread = TDirectThread.new
+      @t_direct_thread.directthreadmsg = params[:session][:message]
+      @t_direct_thread.t_direct_message_id = session[:s_direct_message_id]
+      @t_direct_thread.m_user_id = session[:user_id]
+      @t_direct_thread.read_status = 0
+      @t_direct_thread.save
+      MUser.where(id: session[:s_user_id]).update_all(remember_digest: "1")
 
-    @t_direct_message = TDirectMessage.find_by(id: session[:s_direct_message_id])
-    redirect_to @t_direct_message
+      @t_direct_message = TDirectMessage.find_by(id: session[:s_direct_message_id])
+      redirect_to @t_direct_message
+    end
   end
 end

@@ -21,7 +21,7 @@ body {
     margin: auto;
     width: 100%;
     height: auto;
-    padding-bottom: 20%;
+    padding-bottom: 15px;
     padding-left: 9%;
     padding-right: 9%;
     font-size: 1.0em;
@@ -119,8 +119,8 @@ footer {
 
   
   .foot{
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   a {
@@ -343,6 +343,7 @@ a, a:hover{
   float:left;
   margin-top:13px;
   margin-left: 1px;
+  overflow: hidden;
 }
 
 .dot1{
@@ -368,7 +369,8 @@ a, a:hover{
 
 .sidenav {
   margin-top: 32px;
-  height: 100%;
+  margin-bottom: 32px;
+  height: 97%;
   width: 200px;
   position: fixed;
   z-index: 1;

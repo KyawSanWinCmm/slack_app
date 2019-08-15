@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
                                     INNER JOIN m_users ON m_users.id = t_user_workspaces.userid")
                             .where("m_workspaces.workspace_name = ? and m_users.name = ? ", params[:session][:workspace_name],  params[:session][:name]).take(1)
 
-    if m_user && m_user.authenticate(params[:session][:password]) && m_workspace
+    if m_user && m_user.authenticate(params[:session][:password]) && m_workspace.size > 0
       t_user_workspace = TUserWorkspace.find_by(userid: m_user.id, workspaceid: m_workspace[0].id)
         if t_user_workspace
           if m_user.member_status == true
@@ -42,6 +42,8 @@ class SessionsController < ApplicationController
 
   #Authorname-KyawSanWin@CyberMissions Myanmar Company limited 
   def destroy
+    MUser.where(id: session[:user_id]).update_all(active_status: 0)
+
     session.delete(:workspace_id)
     session.delete(:s_channel_id)
     session.delete(:s_user_id)
@@ -58,6 +60,8 @@ class SessionsController < ApplicationController
 #Authorname-KyawSanWin@CyberMissions Myanmar Company limited 
   def refresh
     @user = MUser.find_by(id: session[:user_id])
+
+    MUser.where(id: session[:user_id]).update_all(active_status: 1)
 
     if @user.remember_digest == "1"
       if session[:s_direct_message_id] != nil && session[:s_direct_message_id] != ""

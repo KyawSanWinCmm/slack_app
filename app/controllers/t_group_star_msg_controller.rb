@@ -9,23 +9,31 @@ class TGroupStarMsgController < ApplicationController
     #check unlogin user
     checkuser
 
-    @t_group_star_msg = TGroupStarMsg.new
-    @t_group_star_msg.userid = session[:user_id]
-    @t_group_star_msg.groupmsgid = params[:id]
-    @t_group_star_msg.save
-    
-    @m_channel = MChannel.find_by(id: session[:s_channel_id])
+    if session[:s_channel_id].nil?
+      redirect_to home_url
+    else
+      @t_group_star_msg = TGroupStarMsg.new
+      @t_group_star_msg.userid = session[:user_id]
+      @t_group_star_msg.groupmsgid = params[:id]
+      @t_group_star_msg.save
+      
+      @m_channel = MChannel.find_by(id: session[:s_channel_id])
 
-    redirect_to @m_channel
+      redirect_to @m_channel
+    end
   end
 
   def destroy
     #check unlogin user
     checkuser
 
-    TGroupStarMsg.find_by(groupmsgid: params[:id], userid: session[:user_id]).destroy
-      
-    @m_channel = MChannel.find_by(id: session[:s_channel_id])
-    redirect_to @m_channel
+    if session[:s_channel_id].nil?
+      redirect_to home_url
+    else
+      TGroupStarMsg.find_by(groupmsgid: params[:id], userid: session[:user_id]).destroy
+        
+      @m_channel = MChannel.find_by(id: session[:s_channel_id])
+      redirect_to @m_channel
+    end
   end
 end

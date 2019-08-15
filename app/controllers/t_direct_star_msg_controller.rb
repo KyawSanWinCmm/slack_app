@@ -9,22 +9,30 @@ class TDirectStarMsgController < ApplicationController
     #check unlogin user
     checkuser
 
-    @t_direct_star_msg = TDirectStarMsg.new
-    @t_direct_star_msg.userid = session[:user_id]
-    @t_direct_star_msg.directmsgid = params[:id]
-    @t_direct_star_msg.save
+    if session[:s_user_id].nil?
+      redirect_to home_url
+    else
+      @t_direct_star_msg = TDirectStarMsg.new
+      @t_direct_star_msg.userid = session[:user_id]
+      @t_direct_star_msg.directmsgid = params[:id]
+      @t_direct_star_msg.save
 
-    @s_user = MUser.find_by(id: session[:s_user_id])
-    redirect_to @s_user
+      @s_user = MUser.find_by(id: session[:s_user_id])
+      redirect_to @s_user
+    end
   end
 
   def destroy
     #check unlogin user
     checkuser
 
-    TDirectStarMsg.find_by(directmsgid: params[:id], userid: session[:user_id]).destroy
+    if session[:s_user_id].nil?
+      redirect_to home_url
+    else
+      TDirectStarMsg.find_by(directmsgid: params[:id], userid: session[:user_id]).destroy
 
-    @s_user = MUser.find_by(id: session[:s_user_id])
-    redirect_to @s_user
+      @s_user = MUser.find_by(id: session[:s_user_id])
+      redirect_to @s_user
+    end
   end
 end

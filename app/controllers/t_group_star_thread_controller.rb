@@ -9,22 +9,40 @@ class TGroupStarThreadController < ApplicationController
     #check unlogin user
     checkuser
 
-    @t_group_star_thread = TGroupStarThread.new
-    @t_group_star_thread.userid = session[:user_id]
-    @t_group_star_thread.groupthreadid = params[:id]
-    @t_group_star_thread.save
-    
-    @t_group_message = TGroupMessage.find_by(id: session[:s_group_message_id])
-    redirect_to @t_group_message
+    if session[:s_group_message_id].nil?
+      unless session[:s_channel_id].nil?
+        @m_channel = MChannel.find_by(id: session[:s_channel_id])
+        redirect_to @m_channel
+      end
+    elsif session[:s_channel_id].nil?
+      redirect_to home_url
+    else
+      @t_group_star_thread = TGroupStarThread.new
+      @t_group_star_thread.userid = session[:user_id]
+      @t_group_star_thread.groupthreadid = params[:id]
+      @t_group_star_thread.save
+      
+      @t_group_message = TGroupMessage.find_by(id: session[:s_group_message_id])
+      redirect_to @t_group_message
+    end
   end
 
   def destroy
     #check unlogin user
     checkuser
 
-    TGroupStarThread.find_by(groupthreadid: params[:id], userid: session[:user_id]).destroy
+    if session[:s_group_message_id].nil?
+      unless session[:s_channel_id].nil?
+        @m_channel = MChannel.find_by(id: session[:s_channel_id])
+        redirect_to @m_channel
+      end
+    elsif session[:s_channel_id].nil?
+      redirect_to home_url
+    else
+      TGroupStarThread.find_by(groupthreadid: params[:id], userid: session[:user_id]).destroy
 
-    @t_group_message = TGroupMessage.find_by(id: session[:s_group_message_id])
-    redirect_to @t_group_message
+      @t_group_message = TGroupMessage.find_by(id: session[:s_group_message_id])
+      redirect_to @t_group_message
+    end
   end
 end

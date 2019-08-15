@@ -102,7 +102,11 @@
 								<ul style="background-color: #2E86C1" class="countnumber">
 								<% end %>
 									<li class="countnumberone">
-									<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user'%> 
+										<% if m_user.active_status == true%>
+											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user'%> 
+										<% else %>
+											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user'%> 
+										<% end %>
 									</li>
 									<% if @direct_msgcounts[@count] != 0 %> 
 										<li class="countnumbertwo">
@@ -123,3 +127,4 @@
 </div>   
 
 <div>
+

@@ -33,9 +33,9 @@
             <p class="style24"></p>
             
             <% if @t_direct_star_thread_msgids.include? t_direct_thread.id %>
-                    | <%= link_to "", unstarthread_path(:id => t_direct_thread.id), class:'fas fa-star' %></li>
+                    <%= link_to "", unstarthread_path(:id => t_direct_thread.id), class:'fas fa-star' %></li>
                 <% else %>
-                    | <%= link_to "",  starthread_path(:id => t_direct_thread.id), class:'far fa-star' %></li>
+                    <%= link_to "",  starthread_path(:id => t_direct_thread.id), class:'far fa-star' %></li>
             <% end %> 
 
             <p class="style3"> -->  <%= t_direct_thread.directthreadmsg%></p>
