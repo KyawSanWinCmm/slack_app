@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
             log_in t_user_workspace
             redirect_to home_path
           else
-            flash.now[:danger] = 'Account Deactivate. Please contact admiin.'
+            flash.now[:danger] = 'Account Deactivate. Please contact admin.'
             render 'new'
           end
         else

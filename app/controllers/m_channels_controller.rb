@@ -39,7 +39,7 @@ class MChannelsController < ApplicationController
       if @m_channel.save
         @t_user_channel = TUserChannel.new
         @t_user_channel.message_count = 0
-        @t_user_channel.unread_channel_message = unread_channel_message
+        @t_user_channel.unread_channel_message = nil
         @t_user_channel.created_admin = 1
         @t_user_channel.userid =session[:user_id]
         @t_user_channel.channelid = @m_channel.id
