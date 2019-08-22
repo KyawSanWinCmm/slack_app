@@ -90,7 +90,7 @@
 							<div id="userlists">
 								<ul class="countnumber">
 									<li class="countnumberone">
-										<%= link_to @m_user.name+"(自分)", "#", class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;'%>
+										<%= link_to @m_user.name+"(自分)", "#", class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;color:#7AB900'%>
 									</li>
 								</ul>
 							<% @count = 0%>
@@ -103,7 +103,7 @@
 								<% end %>
 									<li class="countnumberone">
 										<% if m_user.active_status == true%>
-											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;'%> 
+											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em; color: yellow;'%> 
 										<% else %>
 											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;'%> 
 										<% end %>

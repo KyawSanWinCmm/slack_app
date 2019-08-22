@@ -19,10 +19,10 @@ protect_from_forgery with: :exception
 
     @m_channels = MChannel.select("m_channels.id,channel_name,channel_status,t_user_channels.message_count").joins(
       "INNER JOIN t_user_channels ON t_user_channels.channelid = m_channels.id"
-    ).where("(m_channels.m_workspace_id = ? and t_user_channels.userid = ?)",session[:workspace_id], session[:user_id])
+    ).where("(m_channels.m_workspace_id = ? and t_user_channels.userid = ?)",session[:workspace_id], session[:user_id]).order(id: :asc)
 
     @m_p_channels = MChannel.select("m_channels.id,channel_name,channel_status")
-      .where("(m_channels.channel_status = 1 and m_channels.m_workspace_id = ?)",session[:workspace_id])
+      .where("(m_channels.channel_status = 1 and m_channels.m_workspace_id = ?)",session[:workspace_id]).order(id: :asc)
            
     @direct_msgcounts = Array.new
 

@@ -45,6 +45,7 @@ class SessionsController < ApplicationController
     MUser.where(id: session[:user_id]).update_all(active_status: 0)
 
     session.delete(:workspace_id)
+    session.delete(:user_id)
     session.delete(:s_channel_id)
     session.delete(:s_user_id)
     session.delete(:s_direct_message_id)
@@ -59,33 +60,35 @@ class SessionsController < ApplicationController
 
 #Authorname-KyawSanWin@CyberMissions Myanmar Company limited 
   def refresh
-    @user = MUser.find_by(id: session[:user_id])
+    unless session[:user_id].nil?
+      @user = MUser.find_by(id: session[:user_id])
 
-    MUser.where(id: session[:user_id]).update_all(active_status: 1)
+      MUser.where(id: session[:user_id]).update_all(active_status: 1)
 
-    if @user.remember_digest == "1"
-      if session[:s_direct_message_id] != nil && session[:s_direct_message_id] != ""
-        #call from ApplicationController for retrieve direct thread data
-        retrieve_direct_thread
+      if @user.remember_digest == "1"
+        if session[:s_direct_message_id] != nil && session[:s_direct_message_id] != ""
+          #call from ApplicationController for retrieve direct thread data
+          retrieve_direct_thread
 
-      elsif session[:s_user_id] != nil && session[:s_user_id] != ""    
-        #call from ApplicationController for retrieve direct message data
-        retrieve_direct_message
+        elsif session[:s_user_id] != nil && session[:s_user_id] != ""    
+          #call from ApplicationController for retrieve direct message data
+          retrieve_direct_message
 
-      elsif session[:s_group_message_id] != nil && session[:s_group_message_id] != ""
-        #call from ApplicationController for retrieve group thread data
-        retrieve_group_thread
+        elsif session[:s_group_message_id] != nil && session[:s_group_message_id] != ""
+          #call from ApplicationController for retrieve group thread data
+          retrieve_group_thread
 
-      elsif session[:s_channel_id] != nil && session[:s_channel_id] != ""
-        #call from ApplicationController for retrieve group message data
-        retrieve_group_message
+        elsif session[:s_channel_id] != nil && session[:s_channel_id] != ""
+          #call from ApplicationController for retrieve group message data
+          retrieve_group_message
 
+        end
+        
+        #call from ApplicationController for retrieve home data
+        retrievehome
+
+        MUser.where(id: session[:user_id]).update_all(remember_digest: "0")
       end
-      
-      #call from ApplicationController for retrieve home data
-      retrievehome
-
-      MUser.where(id: session[:user_id]).update_all(remember_digest: "0")
     end
   end
 end
