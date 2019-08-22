@@ -10,6 +10,8 @@ class ChannelUserController < ApplicationController
     checkuser
     if session[:s_channel_id].nil?
       redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
     else
       @w_users = MUser.joins("INNER JOIN t_user_workspaces ON t_user_workspaces.userid = m_users.id")
                       .where("t_user_workspaces.workspaceid = ?", session[:workspace_id])
@@ -35,6 +37,8 @@ class ChannelUserController < ApplicationController
     checkuser
     if session[:s_channel_id].nil?
       redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
     else
       @t_user_channel = TUserChannel.new
       @t_user_channel.message_count = 0
@@ -52,6 +56,8 @@ class ChannelUserController < ApplicationController
     checkuser
 
     if session[:s_channel_id].nil?
+      redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
       redirect_to home_url
     else
       @t_user_channel = TUserChannel.new
@@ -71,6 +77,8 @@ class ChannelUserController < ApplicationController
     #check unlogin user
     checkuser
     if session[:s_channel_id].nil?
+      redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
       redirect_to home_url
     else
       TUserChannel.find_by(userid: params[:id], channelid: session[:s_channel_id]).destroy

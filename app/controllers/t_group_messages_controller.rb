@@ -9,12 +9,19 @@ class TGroupMessagesController < ApplicationController
     #check unlogin user
     checkuser
 
-    session[:s_group_message_id] =  params[:id]
+    
+    if session[:s_channel_id].nil?
+      redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
+    else
+      session[:s_group_message_id] =  params[:id]
 
-    #call from ApplicationController for retrieve group thread data
-    retrieve_group_thread
+      #call from ApplicationController for retrieve group thread data
+      retrieve_group_thread
 
-    #call from ApplicationController for retrieve home data
-    retrievehome
+      #call from ApplicationController for retrieve home data
+      retrievehome
+    end
   end
 end

@@ -3,19 +3,26 @@
     <div id="grouplist">	
         <div class="title">		
             <h2 class="style1">
-            <% if @m_channelsids.include?session[:s_channel_id].to_i%>
-            <span>
-                <%= link_to "", channeledit_path(id: @s_channel.id), class: 'fa fa-edit',  style: 'font-size:17px'%>
-            </span>
-            <% end%>
             <%= @s_channel.channel_name%> 
             <sapn style="margin-left: 20px"> 
                 <i class="material-icons">&#xe7fc;</i> <%= link_to @u_count, channeluser_path%>
             </span>
+            
+            <% if @m_channelsids.include?session[:s_channel_id].to_i%>
+            <span>
+                <button type="button" class="btn btn-default btn-sm" style='font-size:15px; background-color: #F4F4F4'>
+                    <%= link_to "Edit", channeledit_path(id: @s_channel.id), class: 'fa fa-edit',  style: 'font-size:15px; color: black;'%>
+                </button>
+                
+                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal" style='font-size:15px; background-color: #F4F4F4'>
+                    <span class="glyphicon glyphicon-trash" style="font-weight:bold">Delete </span>
+                </button>
+            </span>
+            <% end%>
             </h2>
         </div>
         <div class="style1" style="padding-top: 80px">
-                <%= link_to "Load Mode",  refresh_group_url , class:'glyphicon glyphicon-refresh'%>
+                <%= link_to "Load Mode",  refresh_group_url , class:'glyphicon glyphicon-refresh', style: 'word-spacing: -0.63em;'%>
         </div>
         <% @t_group_message_dates.each do |t_group_message_date| %>
             <% if @t_group_message_datesize.include?t_group_message_date.created_date.to_s %>
@@ -35,6 +42,7 @@
                         <% else %>
                         <%= link_to "",  groupstar_path(:id => t_group_message.id), class:'far fa-star'%>
                         <% end %>
+                        <%= link_to "",  delete_groupmsg_path(:id => t_group_message.id), class:'glyphicon glyphicon-trash'%>
 
                         <p class="style3"> -->  <%= t_group_message.groupmsg%></p>
                         <hr>
@@ -45,10 +53,34 @@
    </div>
 </div>
 
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #1C2331">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="color: white">Channel Delete</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure to delete channel?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info btn-sm" style='font-size:15px;'>
+                <%= link_to "Delete", delete_channel_path(id: @s_channel.id), class: 'glyphicon glyphicon-trash',  style: 'font-size:15px; color: white;'%>
+            </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 <script>
     window.scrollTo(0,document.body.scrollHeight);
 </script>
+
+
 
 
 

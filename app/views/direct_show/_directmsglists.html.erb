@@ -7,7 +7,7 @@
         </div>
         
         <div class="style1" style="padding-top: 80px">
-                <%= link_to "Load Mode",  refresh_direct_url , class:'glyphicon glyphicon-refresh'%>
+                <%= link_to "Load Mode",  refresh_direct_url , class:'glyphicon glyphicon-refresh', style: 'word-spacing: -0.63em;'%>
         </div>
             <%  @t_direct_message_dates.each do |t_direct_date| %>
                 <% if @t_direct_message_datesize.include?t_direct_date.created_date.to_s %>
@@ -43,6 +43,8 @@
                                                 <%= link_to "",  star_path(:id => t_direct_message.id), class:'far fa-star'%>
                                         <% end %>
                                         
+
+                                        <%= link_to "",  delete_directmsg_path(:id => t_direct_message.id), class:'glyphicon glyphicon-trash'%>
 
                                         <p class="style3"> -->  <%= t_direct_message.directmsg%></p>
                                         <hr>

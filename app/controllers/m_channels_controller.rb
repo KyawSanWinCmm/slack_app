@@ -57,20 +57,24 @@ class MChannelsController < ApplicationController
     #check unlogin user
     checkuser
 
-    session.delete(:s_user_id)
-    session.delete(:s_direct_message_id)
-    session.delete(:s_group_message_id)
-    session.delete(:r_direct_size)
+    if MChannel.find_by(id: params[:id]).nil?
+      redirect_to home_url
+    else
+      session.delete(:s_user_id)
+      session.delete(:s_direct_message_id)
+      session.delete(:s_group_message_id)
+      session.delete(:r_direct_size)
 
-    session[:s_channel_id] =  params[:id]
+      session[:s_channel_id] =  params[:id]
 
-    session[:r_group_size] = 10
+      session[:r_group_size] = 10
 
-    #call from ApplicationController for retrieve group message data
-    retrieve_group_message
+      #call from ApplicationController for retrieve group message data
+      retrieve_group_message
 
-    #call from ApplicationController for retrieve home data
-    retrievehome
+      #call from ApplicationController for retrieve home data
+      retrievehome
+    end
   end
 
   #Authorname-KyawSanWin@CyberMissions Myanmar Company limited 
@@ -78,17 +82,21 @@ class MChannelsController < ApplicationController
     #check unlogin user
     checkuser
 
-    if session[:r_group_size].nil?
-      session[:r_group_size] =  10
+    if MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
     else
-      session[:r_group_size] +=  10
+      if session[:r_group_size].nil?
+        session[:r_group_size] =  10
+      else
+        session[:r_group_size] +=  10
+      end
+
+      #call from ApplicationController for retrieve group message data
+      retrieve_group_message
+
+      #call from ApplicationController for retrieve home data
+      retrievehome
     end
-
-    #call from ApplicationController for retrieve group message data
-    retrieve_group_message
-
-    #call from ApplicationController for retrieve home data
-    retrievehome
   end
 
   #Authorname-MyoMinNaing@CyberMissions Myanmar Company limited 
@@ -96,10 +104,14 @@ class MChannelsController < ApplicationController
     #check unlogin user
     checkuser
     
-    #call from ApplicationController for retrieve home data
-    retrievehome
+    if MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
+    else
+      #call from ApplicationController for retrieve home data
+      retrievehome
 
-    @m_channel = MChannel.find_by(id: params[:id])
+      @m_channel = MChannel.find_by(id: params[:id])
+    end
   end
 
   #Authorname-MyoMinNaing@CyberMissions Myanmar Company limited 
@@ -107,14 +119,49 @@ class MChannelsController < ApplicationController
     #check unlogin user
     checkuser
 
-    @m_channel = MChannel.new(channel_params)
+    if MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
+    else
+      @m_channel = MChannel.new(channel_params)
 
-    if @m_channel.channel_name == "" || @m_channel.channel_name.nil?
-      flash[:danger] = "Channel Name can't be blank."
-      redirect_to channeledit_url(id: session[:s_channel_id])
-    else 
-      MChannel.where(id: @m_channel.id).update_all(channel_name: @m_channel.channel_name, channel_status: @m_channel.channel_status)
-      flash[:success] = "Channel Update Successful."
+      if @m_channel.channel_name == "" || @m_channel.channel_name.nil?
+        flash[:danger] = "Channel Name can't be blank."
+        redirect_to channeledit_url(id: session[:s_channel_id])
+      else 
+        MChannel.where(id: @m_channel.id).update_all(channel_name: @m_channel.channel_name, channel_status: @m_channel.channel_status)
+        flash[:success] = "Channel Update Successful."
+        redirect_to home_url
+      end
+    end
+  end
+
+  def delete
+    #check unlogin user
+    checkuser
+
+    if MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
+    else
+      group_messges = TGroupMessage.where(m_channel_id: params[:id])
+
+      group_messges.each do|gmsg|
+        gpthread=TGroupThread.select("id").where(t_group_message_id: gmsg.id)
+
+        gpthread.each do|gpthread|
+          TGroupStarThread.where(groupthreadid: gpthread.id).destroy_all
+          TGroupMentionThread.where(groupthreadid: gpthread.id).destroy_all
+          TGroupThread.find_by(id: gpthread.id).destroy
+        end
+
+        TGroupStarMsg.where(groupmsgid: gmsg.id).destroy_all
+        TGroupMentionMsg.where(groupmsgid: gmsg.id).destroy_all
+        TGroupMessage.find_by(id: gmsg.id).delete
+      end
+
+      TUserChannel.where(channelid: params[:id]).destroy_all
+      MChannel.find_by(id: params[:id]).delete
+
+      flash[:success] = "Channel Delete Successful."
       redirect_to home_url
     end
   end

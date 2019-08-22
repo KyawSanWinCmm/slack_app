@@ -40,7 +40,7 @@
             <% else %>
                 <%= link_to "",  groupstarthread_path(:id => t_group_thread.id), class:'far fa-star'%></li>
             <% end %> 
-
+            <%= link_to "",  delete_groupthread_path(:id => t_group_thread.id), class:'glyphicon glyphicon-trash'%>
             <p class="style3"> -->  <%= t_group_thread.groupthreadmsg%></p>
                 
         <% end %>

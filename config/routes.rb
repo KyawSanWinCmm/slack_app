@@ -20,12 +20,19 @@ Rails.application.routes.draw do
   post 'channelcreate' => 'm_channels#create'
   
   get 'channeledit' => 'm_channels#edit'
+  get 'delete_channel' => 'm_channels#delete'
   post 'channelupdate'=> 'm_channels#update'
 
   get 'star' => 't_direct_star_msg#create'
   get 'unstar' => 't_direct_star_msg#destroy'
   get 'starthread' => 't_direct_star_thread#create'
   get 'unstarthread' => 't_direct_star_thread#destroy'
+
+  get 'delete_directmsg' => "direct_message#deletemsg"
+  get 'delete_directthread' => "direct_message#deletethread"
+
+  get 'delete_groupmsg' => "group_message#deletemsg"
+  get 'delete_groupthread' => "group_message#deletethread"
 
   get 'groupstar' => 't_group_star_msg#create'
   get 'groupunstar' => 't_group_star_msg#destroy'

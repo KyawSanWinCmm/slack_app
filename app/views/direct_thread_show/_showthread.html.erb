@@ -37,7 +37,8 @@
                 <% else %>
                     <%= link_to "",  starthread_path(:id => t_direct_thread.id), class:'far fa-star' %></li>
             <% end %> 
-
+            
+            <%= link_to "",  delete_directthread_path(:id => t_direct_thread.id), class:'glyphicon glyphicon-trash'%>
             <p class="style3"> -->  <%= t_direct_thread.directthreadmsg%></p>
                 
         <% end %>

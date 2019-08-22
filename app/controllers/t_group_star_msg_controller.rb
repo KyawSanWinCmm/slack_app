@@ -11,6 +11,8 @@ class TGroupStarMsgController < ApplicationController
 
     if session[:s_channel_id].nil?
       redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
     else
       @t_group_star_msg = TGroupStarMsg.new
       @t_group_star_msg.userid = session[:user_id]
@@ -28,6 +30,8 @@ class TGroupStarMsgController < ApplicationController
     checkuser
 
     if session[:s_channel_id].nil?
+      redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
       redirect_to home_url
     else
       TGroupStarMsg.find_by(groupmsgid: params[:id], userid: session[:user_id]).destroy

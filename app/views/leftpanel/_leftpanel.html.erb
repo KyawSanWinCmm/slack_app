@@ -16,7 +16,7 @@
 						<li class="countnumberone">
 							<%= link_to "全未読", allunread_url, class: 'fa fa-align-justify' %>
 						</li>
-						<% if @all_unread_count != 0 %> 
+						<% if @all_unread_count > 0 %> 
 						<li class="countnumbertwo">
 							<%=  @all_unread_count %>
 						</li>
@@ -90,7 +90,7 @@
 							<div id="userlists">
 								<ul class="countnumber">
 									<li class="countnumberone">
-										<%= link_to @m_user.name+"(自分)", "#", class: 'glyphicon glyphicon-user'%>
+										<%= link_to @m_user.name+"(自分)", "#", class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;'%>
 									</li>
 								</ul>
 							<% @count = 0%>
@@ -103,9 +103,9 @@
 								<% end %>
 									<li class="countnumberone">
 										<% if m_user.active_status == true%>
-											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user'%> 
+											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;'%> 
 										<% else %>
-											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user'%> 
+											<%= link_to m_user.name, m_user, class: 'glyphicon glyphicon-user', style: 'word-spacing: -0.63em;'%> 
 										<% end %>
 									</li>
 									<% if @direct_msgcounts[@count] != 0 %> 

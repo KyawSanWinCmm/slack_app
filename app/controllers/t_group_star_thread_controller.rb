@@ -16,6 +16,8 @@ class TGroupStarThreadController < ApplicationController
       end
     elsif session[:s_channel_id].nil?
       redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
+      redirect_to home_url
     else
       @t_group_star_thread = TGroupStarThread.new
       @t_group_star_thread.userid = session[:user_id]
@@ -37,6 +39,8 @@ class TGroupStarThreadController < ApplicationController
         redirect_to @m_channel
       end
     elsif session[:s_channel_id].nil?
+      redirect_to home_url
+    elsif MChannel.find_by(id: session[:s_channel_id]).nil?
       redirect_to home_url
     else
       TGroupStarThread.find_by(groupthreadid: params[:id], userid: session[:user_id]).destroy

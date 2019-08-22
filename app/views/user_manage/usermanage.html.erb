@@ -31,8 +31,8 @@
                     <% @user_manages_deactivate.each do |user_manage_deactivate| %>
                         <tr>
                             <td><%= count += 1 %></td>
-                            <td><%= user_manage_deactivate.name %></td>
-                            <td><%= user_manage_deactivate.email %></td>
+                            <td style="background-color: red"><%= user_manage_deactivate.name %></td>
+                            <td style="background-color: red"><%= user_manage_deactivate.email %></td>
                             <td><%= link_to "アカウントを有効する", {controller: "user_manage", action: "update", id: user_manage_deactivate.id } %></td>  
                         </tr>
                     <% end %>                                    
